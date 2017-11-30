@@ -10,6 +10,7 @@ abstract class FormElement<T>(val key: String) {
 
     abstract fun createView(context: Context, formStyleBundle: FormStyleBundle): View
 
+    @Throws(ValidationException::class)
     abstract fun validate()
 
     abstract fun getVal(): T?

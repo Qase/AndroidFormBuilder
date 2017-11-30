@@ -1,10 +1,14 @@
 package cz.qase.android.formbuilderproject
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
-import cz.qase.android.formbuilderlibrary.element.HeaderTextViewElement
+import cz.qase.android.formbuilderlibrary.element.EditTextElement
+import cz.qase.android.formbuilderlibrary.element.HeaderElement
+import cz.qase.android.formbuilderlibrary.element.HeaderTextElement
+import cz.qase.android.formbuilderlibrary.validator.FormValidator
+import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,21 +19,16 @@ class MainActivity : AppCompatActivity() {
 
         val formBuilder = FormBuilder()
         val formStyleBundle = FormStyleBundle(R.color.colorGreen, R.color.colorOrange)
-        formBuilder.addElement(HeaderTextViewElement("key1","Title", "Textung textung tydlidung"))
-        formBuilder.addElement(HeaderTextViewElement("key2","Title2", "Textung textung tydlidung"))
-        formBuilder.addElement(HeaderTextViewElement("key3","Title3", "Textung textung tydlidung"))
-        formBuilder.addElement(HeaderTextViewElement("key4","Title4", "Textung textung tydlidung"))
-        val form = formBuilder.buildForm(this, formWrapper, formStyleBundle)
+        formBuilder.addElement(HeaderTextElement("key1", "Nadpis a text", "Text nadpisu a textu"))
+        formBuilder.addElement(HeaderElement("key2", "Sekce imputů"))
+
+        val notBlankFormValidator = NotBlankFormValidator("HEJ!!!")
+        formBuilder.addElement(EditTextElement("key3", "Input text", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
+        formBuilder.addElement(EditTextElement("key4", "Input text2", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
+        formBuilder.addElement(EditTextElement("key5", "Input text3", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
+        val form = formBuilder.buildForm(this, formWrapper)
         form.draw()
 
 
-        val formBuilder2 = FormBuilder()
-        val formStyleBundle2 = FormStyleBundle()
-        formBuilder2.addElement(HeaderTextViewElement("key1","Title", "Textung textung tydlidung"))
-        formBuilder2.addElement(HeaderTextViewElement("key2","Title2", "Textung textung tydlidung"))
-        formBuilder2.addElement(HeaderTextViewElement("key3","Title3", "Textung textung tydlidung"))
-        formBuilder2.addElement(HeaderTextViewElement("key4","Title4", "Textung textung tydlidung"))
-        val form2 = formBuilder2.buildForm(this, formWrapper, formStyleBundle2)
-        form2.draw()
     }
 }
