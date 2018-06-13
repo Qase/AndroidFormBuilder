@@ -2,9 +2,12 @@ package cz.qase.android.formbuilderproject
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
+import cz.qase.android.formbuilderlibrary.element.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.EditTextElement
+import cz.qase.android.formbuilderlibrary.element.HeadCheckboxElement
 import cz.qase.android.formbuilderlibrary.element.HeaderElement
 import cz.qase.android.formbuilderlibrary.element.HeaderTextElement
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
@@ -26,6 +29,11 @@ class MainActivity : AppCompatActivity() {
         formBuilder.addElement(EditTextElement("key3", "Input text", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
         formBuilder.addElement(EditTextElement("key4", "Input text2", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
         formBuilder.addElement(EditTextElement("key5", "Input text3", "Smaž mě a bude chyba", mutableListOf<FormValidator<String>>(notBlankFormValidator)))
+        formBuilder.addElement(HeadCheckboxElement("key5", true, "Title", "", object : CheckboxCallback {
+            override fun callback(checked: Boolean) {
+                Log.e("HeadCheckboxElement", checked.toString())
+            }
+        }))
         val form = formBuilder.buildForm(this, formWrapper)
         form.draw()
 

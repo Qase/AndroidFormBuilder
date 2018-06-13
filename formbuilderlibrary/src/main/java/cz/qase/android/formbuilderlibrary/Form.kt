@@ -30,6 +30,13 @@ class Form(val context: Context,
         }
     }
 
+    fun reDraw() {
+        viewGroup.removeAllViews()
+        for (element in elementsMap.values) {
+            viewGroup.addView(element.createView(context, formStyleBundle))
+        }
+    }
+
     fun sendForm(callback: Callback) {
         try {
             validate()

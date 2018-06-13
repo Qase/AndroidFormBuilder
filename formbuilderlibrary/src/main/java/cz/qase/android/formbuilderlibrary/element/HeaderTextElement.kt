@@ -33,7 +33,7 @@ class HeaderTextElement(key: String,
         val textView = inflater.inflate(textComponent, null) as TextView
         textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
         textView.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
-        textView.text = title
+        textView.text = value
         return textView
     }
 
