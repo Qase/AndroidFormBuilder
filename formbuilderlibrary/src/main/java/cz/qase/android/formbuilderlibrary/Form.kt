@@ -9,11 +9,11 @@ class Form(val context: Context,
            elements: MutableList<FormElement<*>>,
            val formStyleBundle: FormStyleBundle) {
 
-    val elements: List<FormElement<*>> = arrayListOf()
+    val elements: MutableList<FormElement<*>> = arrayListOf()
 
     init {
         for (element in elements) {
-            elements.add(element)
+            this.elements.add(element)
         }
     }
 
