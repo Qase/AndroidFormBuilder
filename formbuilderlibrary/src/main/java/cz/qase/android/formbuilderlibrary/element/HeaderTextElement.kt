@@ -14,7 +14,7 @@ class HeaderTextElement(key: String,
                         protected val groupComponent: Int = R.layout.form_group_item,
                         protected val headerComponent: Int = R.layout.form_header_item,
                         protected val textComponent: Int = R.layout.form_text_item,
-                        private val formStyleBundle: FormStyleBundle?) : FormElementValid<String>(key) {
+                        private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>(key) {
 
     override fun getVal(): String? {
         return value
