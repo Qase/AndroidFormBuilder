@@ -8,14 +8,13 @@ import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class HeaderTextElement(key: String,
-                        private val title: String,
-                        private val value: String,
-                        private val groupComponent: Int = R.layout.form_group_item,
-                        private val headerComponent: Int = R.layout.form_header_item,
-                        private val textComponent: Int = R.layout.form_text_item,
-                        private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>(key) {
-
+class LabelTextElement(key: String,
+                       private val title: String,
+                       private val value: String,
+                       private val groupComponent: Int = R.layout.form_group_item_inline,
+                       private val headerComponent: Int = R.layout.form_inline_label,
+                       private val textComponent: Int = R.layout.form_inline_text,
+                       private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>(key) {
     override fun getVal(): String? {
         return value
     }
@@ -26,6 +25,7 @@ class HeaderTextElement(key: String,
         val headerView = prepareHeader(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
         val textView = prepareText(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
+        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
         view.addView(headerView)
         view.addView(textView)
         return view
@@ -34,7 +34,6 @@ class HeaderTextElement(key: String,
     private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val textView = inflater.inflate(textComponent, root, false) as TextView
         textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        textView.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
         textView.text = value
         return textView
     }
@@ -42,7 +41,6 @@ class HeaderTextElement(key: String,
     private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
-        headerView.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
         headerView.text = title
         return headerView
     }
