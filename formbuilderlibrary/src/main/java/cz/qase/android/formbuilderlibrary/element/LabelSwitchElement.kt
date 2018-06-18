@@ -37,6 +37,7 @@ class LabelSwitchElement(key: String,
 
     private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): Switch {
         val switchView = inflater.inflate(switchComponent, root, false) as Switch
+        switchView.isChecked = on
         switchView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
         switchView.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
