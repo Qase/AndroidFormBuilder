@@ -8,7 +8,7 @@ import cz.qase.android.formbuilderlibrary.R
 import kotlinx.android.synthetic.main.form_text_item.view.*
 
 
-class TextElement(key: String, val value: String, val component: Int = R.layout.form_text_item) : FormElementValid<String>(key) {
+class TextElement(val value: String, val component: Int = R.layout.form_text_item) : FormElementValid<String>() {
 
     override fun getVal(): String? {
         return value

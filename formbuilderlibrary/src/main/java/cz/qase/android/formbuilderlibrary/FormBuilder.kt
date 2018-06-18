@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderlibrary
 
 import android.content.Context
 import android.view.ViewGroup
+import cz.qase.android.formbuilderlibrary.element.Divider
 import cz.qase.android.formbuilderlibrary.element.FormElement
 
 open class FormBuilder {
@@ -10,6 +11,10 @@ open class FormBuilder {
 
     fun addElement(formElement: FormElement<*>) {
         elements.add(formElement)
+    }
+
+    fun addDivider() {
+        elements.add(Divider())
     }
 
     fun buildForm(context: Context,

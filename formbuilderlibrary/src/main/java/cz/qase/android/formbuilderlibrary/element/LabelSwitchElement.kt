@@ -10,14 +10,13 @@ import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class LabelSwitchElement(key: String,
-                         private val title: String,
+class LabelSwitchElement(private val title: String,
                          private var on: Boolean,
                          private val switchCallback: SwitchCallback,
                          private val groupComponent: Int = R.layout.form_group_item_inline,
                          private val headerComponent: Int = R.layout.form_inline_label,
                          private val switchComponent: Int = R.layout.form_inline_switch,
-                         private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>(key) {
+                         private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>() {
     override fun getVal(): Boolean {
         return on
     }

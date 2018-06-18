@@ -9,21 +9,19 @@ import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
-open class EditTextElement(key: String,
-                           protected val hint: String?,
-                           protected val hintRes: Int?,
-                           protected var text: String? = null,
-                           formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(key, formValidators) {
+open class EditTextElement(
+        protected val hint: String?,
+        protected val hintRes: Int?,
+        protected var text: String? = null,
+        formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(formValidators) {
 
-    constructor(key: String,
-                hint: String?,
+    constructor(hint: String?,
                 text: String? = null,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(key, hint, null, text, formValidators)
+                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(hint, null, text, formValidators)
 
-    constructor(key: String,
-                hintRes: Int?,
+    constructor(hintRes: Int?,
                 text: String? = null,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(key, null, hintRes, text, formValidators)
+                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(null, hintRes, text, formValidators)
 
 
     var editText: TextInputEditText? = null

@@ -8,13 +8,12 @@ import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class HeaderTextElement(key: String,
-                        private val title: String,
+class HeaderTextElement(private val title: String,
                         private val value: String,
                         private val groupComponent: Int = R.layout.form_group_item,
                         private val headerComponent: Int = R.layout.form_header_item,
                         private val textComponent: Int = R.layout.form_text_item,
-                        private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>(key) {
+                        private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>() {
 
     override fun getVal(): String? {
         return value

@@ -10,7 +10,6 @@ import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
 class HeadCheckboxElement(
-        key: String,
         private val checked: Boolean,
         val title: String,
         val hint: String? = null,
@@ -18,7 +17,7 @@ class HeadCheckboxElement(
         protected val groupComponent: Int = R.layout.form_group_item,
         protected val headerComponent: Int = R.layout.form_header_item,
         protected val checkboxComponent: Int = R.layout.form_checkbox_item
-) : FormElementValid<Boolean>(key) {
+) : FormElementValid<Boolean>() {
 
     private lateinit var checkbox: CheckBox
 

@@ -1,8 +1,8 @@
 package cz.qase.android.formbuilderlibrary.element
 
-abstract class FormElementValid<T>(key: String) : FormElement<T>(key) {
+abstract class FormElementValid<T>() : FormElement<T>() {
 
-    override fun validate(){
+    override fun validate() {
 
     }
 }

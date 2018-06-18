@@ -8,7 +8,7 @@ import cz.qase.android.formbuilderlibrary.R
 import kotlinx.android.synthetic.main.form_header_item.view.*
 
 
-class HeaderElement(key: String, val value: String, val component: Int = R.layout.form_header_item) : FormElementValid<String>(key) {
+class HeaderElement(val value: String, val component: Int = R.layout.form_header_item) : FormElementValid<String>() {
 
     override fun getVal(): String? {
         return value

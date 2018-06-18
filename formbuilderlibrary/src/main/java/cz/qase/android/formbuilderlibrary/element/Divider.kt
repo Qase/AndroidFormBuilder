@@ -6,8 +6,7 @@ import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class Divider(key: String,
-              private val dividerComponent: Int = R.layout.form_divider) : FormElementValid<Unit>(key) {
+class Divider(private val dividerComponent: Int = R.layout.form_divider) : FormElementValid<Unit>() {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

@@ -9,30 +9,30 @@ class Form(val context: Context,
            elements: MutableList<FormElement<*>>,
            val formStyleBundle: FormStyleBundle) {
 
-    val elementsMap: LinkedHashMap<String, FormElement<*>> = LinkedHashMap()
+    val elements: List<FormElement<*>> = arrayListOf()
 
     init {
         for (element in elements) {
-            elementsMap.put(element.key, element)
+            elements.add(element)
         }
     }
 
     @Throws(ValidationException::class)
     fun validate() {
-        for (formElement in elementsMap.values) {
+        for (formElement in elements) {
             formElement.validate()
         }
     }
 
     fun draw() {
-        for (element in elementsMap.values) {
+        for (element in elements) {
             viewGroup.addView(element.createView(context, formStyleBundle))
         }
     }
 
     fun reDraw() {
         viewGroup.removeAllViews()
-        for (element in elementsMap.values) {
+        for (element in elements) {
             viewGroup.addView(element.createView(context, formStyleBundle))
         }
     }
