@@ -13,7 +13,8 @@ class HeaderTextElement(key: String,
                         protected val value: String,
                         protected val groupComponent: Int = R.layout.form_group_item,
                         protected val headerComponent: Int = R.layout.form_header_item,
-                        protected val textComponent: Int = R.layout.form_text_item) : FormElementValid<String>(key) {
+                        protected val textComponent: Int = R.layout.form_text_item,
+                        private val formStyleBundle: FormStyleBundle?) : FormElementValid<String>(key) {
 
     override fun getVal(): String? {
         return value
@@ -22,8 +23,8 @@ class HeaderTextElement(key: String,
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareHeader(inflater, context, formStyleBundle)
-        val textView = prepareText(inflater, context, formStyleBundle)
+        val headerView = prepareHeader(inflater, context, this.formStyleBundle ?: formStyleBundle)
+        val textView = prepareText(inflater, context, this.formStyleBundle ?: formStyleBundle)
         view.addView(headerView)
         view.addView(textView)
         return view
