@@ -9,6 +9,7 @@ import android.widget.Switch
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 class LabelSwitchElement(private val title: String,

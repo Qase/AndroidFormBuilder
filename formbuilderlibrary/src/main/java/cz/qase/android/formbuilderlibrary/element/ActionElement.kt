@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 
 
 class ActionElement(private val actionCallback: ActionCallback,
