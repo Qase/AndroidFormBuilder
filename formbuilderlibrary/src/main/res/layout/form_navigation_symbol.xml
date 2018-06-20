@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imageValue"
+    android:layout_width="15dp"
+    android:layout_height="15dp"
+    android:contentDescription="@string/navigation"
+    android:src="@drawable/arrow_right"
+    android:textAlignment="gravity" />
+
+
