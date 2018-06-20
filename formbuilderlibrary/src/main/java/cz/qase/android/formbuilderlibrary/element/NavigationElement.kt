@@ -59,14 +59,14 @@ class NavigationElement(private val actionCallback: ActionCallback,
         symbolWrapper.orientation = LinearLayout.HORIZONTAL
         symbolWrapper.gravity = Gravity.END
         val symbolView = inflater.inflate(symbolComponent, root, false) as ImageView
-        symbolView.setColorFilter(context.resources.getColor(formStyleBundle.primaryTextColor))
+        symbolView.setColorFilter(context.resources.getColor(formStyleBundle.secondaryTextColor))
         symbolWrapper.addView(symbolView)
         return symbolWrapper
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
         headerView.text = label
         return headerView
     }
