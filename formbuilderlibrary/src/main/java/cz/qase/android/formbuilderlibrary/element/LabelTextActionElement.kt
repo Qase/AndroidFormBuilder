@@ -1,10 +1,8 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
@@ -20,14 +18,23 @@ class LabelTextActionElement(title: String,
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val view = super.createView(context, formStyleBundle)
-        val animation = AlphaAnimation(1f, 0f) // Change alpha from fully visible to invisible
-        animation.duration = 200 // duration - half a second
-        animation.interpolator = LinearInterpolator() // do not alter animation rate
-        animation.repeatMode = Animation.REVERSE; // Reverse animation at the end so the button will fade back in
-        animation.repeatCount = 1
-        view.setOnClickListener {
-            view.startAnimation(animation)
+        view.setOnClickListener({
             actionCallback.callback()
+        })
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    view.performClick()
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                }
+                MotionEvent.ACTION_DOWN -> {
+                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+                }
+            }
+            true
         }
         return view
     }
