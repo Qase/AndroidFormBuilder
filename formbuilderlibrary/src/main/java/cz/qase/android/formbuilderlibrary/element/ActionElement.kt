@@ -26,8 +26,4 @@ class ActionElement(private val label: String,
         })
         return button
     }
-
-    interface ActionCallback {
-        fun callback()
-    }
 }
