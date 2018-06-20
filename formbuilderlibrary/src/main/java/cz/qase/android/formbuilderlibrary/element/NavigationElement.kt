@@ -32,6 +32,7 @@ class NavigationElement(private val actionCallback: ActionCallback,
         view.addView(headerView)
         view.addView(symbolView)
 
+        view.isClickable = true
         view.setOnClickListener({
             actionCallback.callback()
         })

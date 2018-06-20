@@ -19,6 +19,7 @@ class ActionElement(private val actionCallback: ActionCallback,
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val view = super.createView(context, formStyleBundle)
+        view.isClickable = true
         view.setOnClickListener({
             actionCallback.callback()
         })
