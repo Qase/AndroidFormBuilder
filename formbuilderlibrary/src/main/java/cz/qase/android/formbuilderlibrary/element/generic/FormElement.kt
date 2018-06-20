@@ -1,4 +1,4 @@
-package cz.qase.android.formbuilderlibrary.element
+package cz.qase.android.formbuilderlibrary.element.generic
 
 import android.content.Context
 import android.view.View

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 import kotlinx.android.synthetic.main.form_text_item.view.*
 
 

@@ -1,4 +1,4 @@
-package cz.qase.android.formbuilderlibrary.element
+package cz.qase.android.formbuilderlibrary.element.generic
 
 import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.validator.FormValidator

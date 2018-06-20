@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
 open class EditTextElement(

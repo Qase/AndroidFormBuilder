@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 class Divider(private val dividerComponent: Int = R.layout.form_divider) : FormElementValid<Unit>() {
 

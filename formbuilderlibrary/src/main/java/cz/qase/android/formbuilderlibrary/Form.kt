@@ -2,7 +2,7 @@ package cz.qase.android.formbuilderlibrary
 
 import android.content.Context
 import android.view.ViewGroup
-import cz.qase.android.formbuilderlibrary.element.FormElement
+import cz.qase.android.formbuilderlibrary.element.generic.FormElement
 
 class Form(val context: Context,
            val viewGroup: ViewGroup,

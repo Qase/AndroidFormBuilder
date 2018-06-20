@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 open class LabelTextElement(private val label: String,
                             private val text: String,

@@ -1,4 +1,4 @@
-package cz.qase.android.formbuilderlibrary.element
+package cz.qase.android.formbuilderlibrary.element.generic
 
 abstract class FormElementValid<T>() : FormElement<T>() {
 

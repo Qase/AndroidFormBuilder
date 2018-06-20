@@ -9,10 +9,11 @@ import android.widget.Switch
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 class LabelSwitchElement(private val title: String,
                          private var on: Boolean,
-                         private val switchCallback: SwitchCallback,
+                         private val checkboxCallback: CheckboxCallback,
                          private val groupComponent: Int = R.layout.form_group_item_inline,
                          private val headerComponent: Int = R.layout.form_inline_label,
                          private val switchComponent: Int = R.layout.form_inline_switch,
@@ -41,7 +42,7 @@ class LabelSwitchElement(private val title: String,
         switchView.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 on = isChecked
-                switchCallback.callback(on)
+                checkboxCallback.callback(on)
             }
         })
         return switchView
@@ -53,8 +54,4 @@ class LabelSwitchElement(private val title: String,
         headerView.text = title
         return headerView
     }
-}
-
-interface SwitchCallback {
-    fun callback(checked: Boolean)
 }

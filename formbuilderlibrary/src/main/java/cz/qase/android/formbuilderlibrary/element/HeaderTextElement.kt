@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 class HeaderTextElement(private val title: String,
                         private val value: String,
