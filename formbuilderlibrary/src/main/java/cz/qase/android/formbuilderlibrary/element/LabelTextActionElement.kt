@@ -1,50 +1,34 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class LabelTextActionElement(private val title: String,
-                             private val value: String,
+
+class LabelTextActionElement(title: String,
+                             value: String,
                              private val actionCallback: ActionCallback,
-                             private val groupComponent: Int = R.layout.form_group_item_inline,
-                             private val headerComponent: Int = R.layout.form_inline_label,
-                             private val textComponent: Int = R.layout.form_inline_text,
-                             private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>() {
-    override fun getVal(): String? {
-        return value
-    }
+                             groupComponent: Int = R.layout.form_group_item_inline,
+                             headerComponent: Int = R.layout.form_inline_label,
+                             textComponent: Int = R.layout.form_inline_text,
+                             formStyleBundle: FormStyleBundle? = null) :
+        LabelTextElement(title, value, groupComponent, headerComponent, textComponent, formStyleBundle) {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareHeader(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
-        val textView = prepareText(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
-        view.addView(headerView)
-        view.addView(textView)
+        val view = super.createView(context, formStyleBundle)
+        val animation = AlphaAnimation(1f, 0f) // Change alpha from fully visible to invisible
+        animation.duration = 200 // duration - half a second
+        animation.interpolator = LinearInterpolator() // do not alter animation rate
+        animation.repeatMode = Animation.REVERSE; // Reverse animation at the end so the button will fade back in
+        animation.repeatCount = 1
         view.setOnClickListener {
+            view.startAnimation(animation)
             actionCallback.callback()
         }
         return view
-    }
-
-    private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
-        val textView = inflater.inflate(textComponent, root, false) as TextView
-        textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        textView.text = value
-        return textView
-    }
-
-    private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
-        val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
-        headerView.text = title
-        return headerView
     }
 }

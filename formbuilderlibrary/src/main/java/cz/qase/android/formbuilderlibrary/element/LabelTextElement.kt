@@ -8,12 +8,12 @@ import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 
-class LabelTextElement(private val title: String,
-                       private val value: String,
-                       private val groupComponent: Int = R.layout.form_group_item_inline,
-                       private val headerComponent: Int = R.layout.form_inline_label,
-                       private val textComponent: Int = R.layout.form_inline_text,
-                       private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>() {
+open class LabelTextElement(private val title: String,
+                            private val value: String,
+                            private val groupComponent: Int = R.layout.form_group_item_inline,
+                            private val headerComponent: Int = R.layout.form_inline_label,
+                            private val textComponent: Int = R.layout.form_inline_text,
+                            private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>() {
     override fun getVal(): String? {
         return value
     }
