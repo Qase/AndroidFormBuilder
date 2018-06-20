@@ -7,16 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
-import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 open class LabelTextElement(private val label: String,
                             private val text: String,
                             private val groupComponent: Int = R.layout.form_group_item_inline,
                             private val headerComponent: Int = R.layout.form_inline_label,
                             private val textComponent: Int = R.layout.form_inline_text,
-                            private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Unit>() {
-    override fun getVal() {
-    }
+                            private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

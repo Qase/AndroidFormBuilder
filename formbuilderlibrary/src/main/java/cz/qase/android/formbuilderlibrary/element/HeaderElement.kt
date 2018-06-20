@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
-import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 import kotlinx.android.synthetic.main.form_header_item.view.*
 
 
-class HeaderElement(val value: String, val component: Int = R.layout.form_header_item) : FormElementValid<String>() {
-
-    override fun getVal(): String? {
-        return value
-    }
+class HeaderElement(val value: String, val component: Int = R.layout.form_header_item) : FormElementNoValue() {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

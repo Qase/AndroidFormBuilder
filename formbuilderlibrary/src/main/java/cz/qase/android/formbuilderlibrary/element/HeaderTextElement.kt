@@ -7,18 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
-import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 class HeaderTextElement(private val title: String,
                         private val value: String,
                         private val groupComponent: Int = R.layout.form_group_item,
                         private val headerComponent: Int = R.layout.form_header_item,
                         private val textComponent: Int = R.layout.form_text_item,
-                        private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<String>() {
-
-    override fun getVal(): String? {
-        return value
-    }
+                        private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
