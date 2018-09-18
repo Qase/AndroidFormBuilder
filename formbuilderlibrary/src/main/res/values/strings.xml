@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Form Builder Library</string>
     <string name="navigation">Navigace</string>
+    <string name="open">Otevřít</string>
 </resources>
