@@ -16,6 +16,8 @@ open class LabelTextElement(private val label: String,
                             private val textComponent: Int = R.layout.form_inline_text,
                             private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
+    private var textView: TextView? = null
+    private var labelView: TextView? = null
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
@@ -32,13 +34,23 @@ open class LabelTextElement(private val label: String,
         val textView = inflater.inflate(textComponent, root, false) as TextView
         textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
         textView.text = text
+        this.textView = textView
         return textView
+    }
+
+    fun updateLabel(label: String) {
+        textView?.text = text
+    }
+
+    fun updateText(text: String) {
+        textView?.text = text
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
         headerView.text = label
+        labelView = headerView
         return headerView
     }
 }
