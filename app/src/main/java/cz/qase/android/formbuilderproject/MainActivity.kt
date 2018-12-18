@@ -1,8 +1,9 @@
 package cz.qase.android.formbuilderproject
 
+import android.app.Activity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.element.CheckboxCallback
@@ -14,7 +15,7 @@ import cz.qase.android.formbuilderlibrary.validator.FormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

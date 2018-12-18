@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/headerValue"
     style="@style/headingStyle"
-    tools:text="Field name"/>
+    app:layout_constraintLeft_toLeftOf="parent"
+    tools:text="Field name" />
