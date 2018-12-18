@@ -44,6 +44,7 @@ class LabelSpinnerElement<T>(private val label: String,
         spinner.setArrowDrawable(context.resources.getDrawable(arrowDrawable))
         spinner.setArrowTintColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
         spinner.attachDataSource(availableValues)
+        spinner.selectedIndex = availableValues.indexOf(value)
         spinner.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
         spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
