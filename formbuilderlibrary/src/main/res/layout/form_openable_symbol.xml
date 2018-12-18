@@ -7,6 +7,7 @@
     android:contentDescription="@string/open"
     android:src="@drawable/arrow_down"
     android:textAlignment="gravity"
+    android:layout_margin="10dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
