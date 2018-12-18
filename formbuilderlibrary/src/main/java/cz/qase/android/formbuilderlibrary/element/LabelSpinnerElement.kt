@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
-import cz.qase.android.formbuilderlibrary.common.SpinnerAdapter
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import org.angmarch.views.NiceSpinner
@@ -42,19 +41,19 @@ class LabelSpinnerElement<T>(private val label: String,
 
     private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
-
-        val adapter = SpinnerAdapter(context, itemComponent, availableValues, formStyleBundle)
-        spinner.setAdapter(adapter)
         spinner.setArrowDrawable(context.resources.getDrawable(arrowDrawable))
         spinner.setArrowTintColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        spinner.selectedIndex = adapter.getPosition(value)
+        spinner.attachDataSource(availableValues)
+        spinner.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        spinner.addOnItemClickListener { adapterView, view, i, l ->
+
+        }
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                valueCallback.callback(parent.getItemAtPosition(position - 1) as T)
+            override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                valueCallback.callback(availableValues[position])
             }
         })
         this.spinner = spinner
