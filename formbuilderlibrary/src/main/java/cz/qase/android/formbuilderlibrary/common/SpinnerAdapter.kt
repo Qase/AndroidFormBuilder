@@ -11,11 +11,10 @@ import cz.qase.android.formbuilderlibrary.R
 
 
 class SpinnerAdapter<T>(context: Context,
-                        textViewResourceId: Int,
                         private val itemList: List<T>,
                         private val formStyleBundle: FormStyleBundle,
                         private val itemComponent: Int = R.layout.form_spinner_item
-) : ArrayAdapter<T>(context, textViewResourceId, itemList) {
+) : ArrayAdapter<T>(context, itemComponent, itemList) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getOrCreateView(convertView, position)
@@ -34,6 +33,7 @@ class SpinnerAdapter<T>(context: Context,
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(itemComponent, null) as TextView
         view.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
         view.text = itemList[position].toString()
         return view
     }

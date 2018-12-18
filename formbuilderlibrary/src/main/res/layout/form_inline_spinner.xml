@@ -5,7 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
+    android:minWidth="150dp"
+    android:textAlignment="textEnd"
+    app:layout_constraintTop_toTopOf="parent"
     app:arrowDrawable="@drawable/ic_arrow_down"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:popupTextAlignment="end" />
