@@ -1,13 +1,11 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
@@ -54,15 +52,10 @@ class NavigationElement(private val actionCallback: ActionCallback,
         return view
     }
 
-    private fun prepareSymbol(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): ViewGroup {
-        val symbolWrapper = LinearLayout(context)
-        symbolWrapper.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        symbolWrapper.orientation = LinearLayout.HORIZONTAL
-        symbolWrapper.gravity = Gravity.END
+    private fun prepareSymbol(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): ImageView {
         val symbolView = inflater.inflate(symbolComponent, root, false) as ImageView
         symbolView.setColorFilter(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        symbolWrapper.addView(symbolView)
-        return symbolWrapper
+        return symbolView
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
