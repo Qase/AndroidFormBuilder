@@ -1,6 +1,7 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,6 +12,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 class OpenableHeaderTextElement(private val label: String,
@@ -35,10 +38,12 @@ class OpenableHeaderTextElement(private val label: String,
         symbolWrapper.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         symbolWrapper.orientation = LinearLayout.HORIZONTAL
         symbolWrapper.gravity = Gravity.END
+
         val symbolView = inflater.inflate(symbolComponent, symbolWrapper, false) as ImageView
-        symbolView.setColorFilter(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        val symbolColor = ContextCompat.getColor(context, formStyleBundle.secondaryTextColor)
+        symbolView.setColorFilter(symbolColor)
         symbolWrapper.addView(symbolView)
-        headerGroup.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        headerGroup.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         headerGroup.addView(headerView)
         headerGroup.addView(symbolWrapper)
 
@@ -52,17 +57,17 @@ class OpenableHeaderTextElement(private val label: String,
                 symbolView.rotation = symbolView.rotation + 180
             }
         }
-        headerGroup.setOnTouchListener { v, event ->
+        headerGroup.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    headerGroup.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    headerGroup.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                     headerGroup.performClick()
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    headerGroup.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    headerGroup.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                 }
                 MotionEvent.ACTION_DOWN -> {
-                    headerGroup.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+                    headerGroup.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
                 }
             }
             true
@@ -75,15 +80,15 @@ class OpenableHeaderTextElement(private val label: String,
 
     private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val textView = inflater.inflate(textComponent, root, false) as TextView
-        textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        textView.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        textView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
+        textView.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         textView.text = value
         return textView
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
         return headerView
     }

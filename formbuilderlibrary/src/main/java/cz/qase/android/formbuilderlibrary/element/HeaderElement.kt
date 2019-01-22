@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 import kotlinx.android.synthetic.main.form_header_item.view.*
 
@@ -15,8 +17,8 @@ class HeaderElement(val value: String, val component: Int = R.layout.form_header
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(component, null)
         view.headerValue.text = value
-        view.headerValue.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
-        view.headerValue.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+        view.headerValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        view.headerValue.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
         return view
     }
 }

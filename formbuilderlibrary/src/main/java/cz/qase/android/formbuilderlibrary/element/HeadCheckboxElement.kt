@@ -1,6 +1,7 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
@@ -40,8 +43,8 @@ class HeadCheckboxElement(
 
     private fun prepareCheckbox(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle): CheckBox {
         checkbox = inflater.inflate(checkboxComponent, null) as CheckBox
-        checkbox.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        checkbox.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        checkbox.setTextColor(ContextCompat.getColor(context, formStyleBundle.secondaryTextColor))
+        checkbox.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         checkbox.text = hint
         checkbox.isChecked = checked
         checkbox.setOnClickListener {
@@ -52,8 +55,8 @@ class HeadCheckboxElement(
 
     private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle): TextView {
         val headerView = inflater.inflate(headerComponent, null) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
-        headerView.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        headerView.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
         headerView.text = title
         return headerView
     }

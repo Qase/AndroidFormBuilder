@@ -32,8 +32,8 @@ class SpinnerAdapter<T>(context: Context,
         }
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(itemComponent, null) as TextView
-        view.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        view.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.text = itemList[position].toString()
         return view
     }

@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 
 
@@ -20,20 +21,20 @@ class ActionElement(private val actionCallback: ActionCallback,
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val view = super.createView(context, formStyleBundle)
         view.isClickable = true
-        view.setOnClickListener({
+        view.setOnClickListener {
             actionCallback.callback()
-        })
-        view.setOnTouchListener { v, event ->
+        }
+        view.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                     view.performClick()
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                 }
                 MotionEvent.ACTION_DOWN -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
                 }
             }
             true

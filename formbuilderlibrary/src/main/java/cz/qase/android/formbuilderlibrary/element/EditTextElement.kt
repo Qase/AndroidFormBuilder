@@ -7,6 +7,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
@@ -31,14 +33,14 @@ open class EditTextElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
-        textInputLayout?.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        textInputLayout?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         textInputLayout?.setPadding(10,0,10,0)
 
         editText = TextInputEditText(context)
-        editText?.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         textInputLayout?.addView(editText)
         textInputLayout?.hint = if (hintRes != null) {
-            context.resources.getString(hintRes ?: 0)
+            context.resources.getString(hintRes)
         } else {
             hint
         }

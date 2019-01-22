@@ -9,6 +9,8 @@ import android.widget.Switch
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
@@ -30,7 +32,7 @@ class LabelSwitchElement(private val title: String,
                 ?: formStyleBundle, view)
         val textView = prepareSwitch(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(textView)
         return view
@@ -39,19 +41,17 @@ class LabelSwitchElement(private val title: String,
     private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): Switch {
         val switchView = inflater.inflate(switchComponent, root, false) as Switch
         switchView.isChecked = on
-        switchView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-        switchView.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                on = isChecked
-                checkboxCallback.callback(on)
-            }
-        })
+        switchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
+        switchView.setOnCheckedChangeListener { _, isChecked ->
+            on = isChecked
+            checkboxCallback.callback(on)
+        }
         return switchView
     }
 
     private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = title
         return headerView
     }

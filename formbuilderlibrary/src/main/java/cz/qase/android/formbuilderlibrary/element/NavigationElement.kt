@@ -1,6 +1,7 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -9,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
@@ -26,25 +29,25 @@ class NavigationElement(private val actionCallback: ActionCallback,
                 ?: formStyleBundle, view)
         val symbolView = prepareSymbol(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(symbolView)
 
         view.isClickable = true
-        view.setOnClickListener({
+        view.setOnClickListener {
             actionCallback.callback()
-        })
-        view.setOnTouchListener { v, event ->
+        }
+        view.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                     view.performClick()
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                 }
                 MotionEvent.ACTION_DOWN -> {
-                    view.setBackgroundColor(context.resources.getColor(formStyleBundle.primaryBackgroundColor))
+                    view.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
                 }
             }
             true
@@ -54,13 +57,14 @@ class NavigationElement(private val actionCallback: ActionCallback,
 
     private fun prepareSymbol(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): ImageView {
         val symbolView = inflater.inflate(symbolComponent, root, false) as ImageView
-        symbolView.setColorFilter(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        val color = ContextCompat.getColor(context, formStyleBundle.secondaryTextColor)
+        symbolView.setColorFilter(color)
         return symbolView
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
         return headerView
     }
