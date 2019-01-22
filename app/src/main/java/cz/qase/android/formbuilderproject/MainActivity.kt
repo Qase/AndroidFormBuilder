@@ -68,8 +68,7 @@ class MainActivity : Activity() {
     private fun buildForm() = with(FormBuilder()) {
 
         //App Header
-        addElement(HeaderElement("AndroidFormBuilder test app"))
-        addDivider()
+        addElement(HeaderElement("AndroidFormBuilder test app"), true)
 
         //static elements
         addElement(HeaderElement("Static elements"), true)
@@ -88,7 +87,7 @@ class MainActivity : Activity() {
 
         //action elements
         addElement(HeaderElement("Action elements"), true)
-        addElement(ActionElement(showToastActionCallback, "ActionElement Label", "ActionElement text"), true)
+        addElement(ActionElement(showToastActionCallback, "ActionElement label", "ActionElement text"), true)
         addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
         addElement(ActionElement(validateActionCallback, "Validate all elements", ""), true)
 
