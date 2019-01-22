@@ -19,7 +19,7 @@ class LabelSpinnerElement<T>(private val label: String,
                              private val groupComponent: Int = R.layout.form_group_item_inline,
                              private val labelComponent: Int = R.layout.form_inline_label,
                              private val spinnerComponent: Int = R.layout.form_inline_spinner,
-                             private val arrowDrawable: Int = R.drawable.ic_arrow_down,
+                             private val arrowDrawable: Int? = null,
                              private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<T>() {
 
@@ -41,7 +41,9 @@ class LabelSpinnerElement<T>(private val label: String,
     private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
         if (spinnerComponent != R.layout.form_inline_spinner) {
-            spinner.setArrowDrawable(context.resources.getDrawable(arrowDrawable))
+            if (arrowDrawable != null){
+                spinner.setArrowDrawable(context.resources.getDrawable(arrowDrawable))
+            }
             spinner.setArrowTintColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
             spinner.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
             spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
