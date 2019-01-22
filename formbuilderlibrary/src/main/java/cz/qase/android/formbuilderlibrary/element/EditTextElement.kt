@@ -32,6 +32,7 @@ open class EditTextElement(
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
         textInputLayout?.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        textInputLayout?.setPadding(10,0,10,0)
 
         editText = TextInputEditText(context)
         editText?.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))

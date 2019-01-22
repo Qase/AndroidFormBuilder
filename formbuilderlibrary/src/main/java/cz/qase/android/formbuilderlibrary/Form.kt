@@ -3,6 +3,7 @@ package cz.qase.android.formbuilderlibrary
 import android.content.Context
 import android.view.ViewGroup
 import cz.qase.android.formbuilderlibrary.element.generic.FormElement
+import kotlin.math.max
 
 class Form(val context: Context,
            val viewGroup: ViewGroup,
@@ -25,8 +26,10 @@ class Form(val context: Context,
     }
 
     fun draw() {
+        //draw everything first and then add height
         for (element in elements) {
-            viewGroup.addView(element.createView(context, formStyleBundle))
+            val view = element.createView(context, formStyleBundle)
+            viewGroup.addView(view)
         }
     }
 
