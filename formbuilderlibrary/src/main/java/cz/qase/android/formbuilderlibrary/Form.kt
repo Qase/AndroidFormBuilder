@@ -50,6 +50,5 @@ class Form(val context: Context,
     interface Callback {
         fun successCallback()
         fun errorCallback(message: String?)
-
     }
 }
