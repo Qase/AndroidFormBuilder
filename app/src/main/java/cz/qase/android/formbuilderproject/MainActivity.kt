@@ -72,39 +72,25 @@ class MainActivity : Activity() {
         addDivider()
 
         //static elements
-        addElement(HeaderElement("Static elements"))
-        addDivider()
-        addElement(TextElement("TextElement value"))
-        addDivider()
-        addElement(LabelTextElement("LabelTextElement value", "LabelTextElement text"))
-        addDivider()
-        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"))
-        addDivider()
+        addElement(HeaderElement("Static elements"), true)
+        addElement(TextElement("TextElement value"), true)
+        addElement(LabelTextElement("LabelTextElement value", "LabelTextElement text"), true)
+        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"), true)
 
         //input elements
-        addElement(HeaderElement("Input elements"))
-        addDivider()
-        addElement(LabelSwitchElement("LabelSwitchElement title", true, showToastCheckboxCallback))
-        addDivider()
-        addElement(LabelSpinnerElement("LabelSpinnerElement label", "b", stringValues, showToastStringValueCallback))
-        addDivider()
-
+        addElement(HeaderElement("Input elements"), true)
+        addElement(LabelSwitchElement("LabelSwitchElement title", true, showToastCheckboxCallback), true)
+        addElement(LabelSpinnerElement("LabelSpinnerElement label", "b", stringValues, showToastStringValueCallback), true)
 
         //input validable elements
-        addElement(HeaderElement("Input validable elements"))
-        addDivider()
-        addElement(EditTextElement("Hint", "Edit text element text", arrayListOf(maxLengthValidator, notEmptyValidator)))
-        addDivider()
+        addElement(HeaderElement("Input validable elements"), true)
+        addElement(EditTextElement("Hint", "Edit text element text", arrayListOf(maxLengthValidator, notEmptyValidator)), true)
 
         //action elements
-        addElement(HeaderElement("Action elements"))
-        addDivider()
-        addElement(ActionElement(showToastActionCallback, "ActionElement Label", "ActionElement text"))
-        addDivider()
-        addElement(NavigationElement(showToastActionCallback, "NavigationElement label"))
-        addDivider()
-        addElement(ActionElement(validateActionCallback, "Validate all elements", ""))
-        addDivider()
+        addElement(HeaderElement("Action elements"), true)
+        addElement(ActionElement(showToastActionCallback, "ActionElement Label", "ActionElement text"), true)
+        addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
+        addElement(ActionElement(validateActionCallback, "Validate all elements", ""), true)
 
         return@with buildForm(this@MainActivity, formWrapper)
     }

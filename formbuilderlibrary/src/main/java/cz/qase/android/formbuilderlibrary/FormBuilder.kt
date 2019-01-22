@@ -9,8 +9,12 @@ open class FormBuilder {
 
     private val elements: MutableList<FormElement<*>> = ArrayList()
 
-    fun addElement(formElement: FormElement<*>) {
+    fun addElement(formElement: FormElement<*>, addDivider: Boolean = false) {
         elements.add(formElement)
+
+        if (addDivider){
+            addDivider()
+        }
     }
 
     fun addDivider() {
