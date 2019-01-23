@@ -17,7 +17,7 @@ class MainActivity : Activity() {
 
     private lateinit var form: Form
 
-    private val stringValues = ('a'..'f').map { it.toString() }.toList()
+    private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it"}.toList()
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
     private val maxLengthValidator = MaxLengthFormValidator("This filed has more than 10 characters.", 10)
@@ -68,20 +68,21 @@ class MainActivity : Activity() {
     private fun buildForm() = with(FormBuilder()) {
 
 
-        addElement(LabelCheckboxElement("TITLE", true, showToastCheckboxCallback))
         //App Header
         addElement(HeaderElement("AndroidFormBuilder test app"), true)
 
         //static elements
         addElement(HeaderElement("Static elements"), true)
         addElement(TextElement("TextElement value"), true)
-        addElement(LabelTextElement("LabelTextElement value", "LabelTextElement text"), true)
+        addElement(LabelTextElement("LabelTextElement label", "LabelTextElement text"), true)
         addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"), true)
 
         //input elements
         addElement(HeaderElement("Input elements"), true)
-        addElement(LabelSwitchElement("LabelSwitchElement title", true, showToastCheckboxCallback), true)
-        addElement(LabelSpinnerElement("LabelSpinnerElement label", "b", stringValues, showToastStringValueCallback), true)
+        addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
+        addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
+        addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback))
+
 
         //input validable elements
         addElement(HeaderElement("Input validable elements"), true)

@@ -15,7 +15,7 @@ import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
 class LabelCheckboxElement(
-        private val title: String,
+        private val label: String,
         private val checked: Boolean,
         private val checkboxCallback: CheckboxCallback,
         private val groupComponent: Int = R.layout.form_group_item_inline,
@@ -45,7 +45,7 @@ class LabelCheckboxElement(
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(labelComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        headerView.text = title
+        headerView.text = label
         return headerView
     }
 

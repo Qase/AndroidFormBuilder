@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
@@ -14,15 +13,15 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
-class LabelSwitchElement(private val title: String,
-                         private var on: Boolean,
+class LabelSwitchElement(private val label: String,
+                         private var checked: Boolean,
                          private val checkboxCallback: CheckboxCallback,
                          private val groupComponent: Int = R.layout.form_group_item_inline,
                          private val headerComponent: Int = R.layout.form_inline_label,
                          private val switchComponent: Int = R.layout.form_inline_switch,
                          private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>() {
     override fun getVal(): Boolean {
-        return on
+        return checked
     }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
@@ -40,11 +39,11 @@ class LabelSwitchElement(private val title: String,
 
     private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): Switch {
         val switchView = inflater.inflate(switchComponent, root, false) as Switch
-        switchView.isChecked = on
+        switchView.isChecked = checked
         switchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         switchView.setOnCheckedChangeListener { _, isChecked ->
-            on = isChecked
-            checkboxCallback.callback(on)
+            checked = isChecked
+            checkboxCallback.callback(checked)
         }
         return switchView
     }
@@ -52,7 +51,7 @@ class LabelSwitchElement(private val title: String,
     private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        headerView.text = title
+        headerView.text = label
         return headerView
     }
 }
