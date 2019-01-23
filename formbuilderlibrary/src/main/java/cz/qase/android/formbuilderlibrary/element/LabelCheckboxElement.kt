@@ -1,7 +1,10 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.CompoundButtonCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +54,10 @@ class LabelCheckboxElement(
 
     private fun prepareCheckbox(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): CheckBox {
         checkbox = inflater.inflate(checkboxComponent, root, false) as CheckBox
-        checkbox.setTextColor(ContextCompat.getColor(context, formStyleBundle.secondaryTextColor))
+
+
+        val color = ContextCompat.getColor(context,formStyleBundle.primaryBackgroundColor)
+        CompoundButtonCompat.setButtonTintList(checkbox, ColorStateList.valueOf(color))
         checkbox.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         checkbox.isChecked = checked
         checkbox.setOnClickListener {
