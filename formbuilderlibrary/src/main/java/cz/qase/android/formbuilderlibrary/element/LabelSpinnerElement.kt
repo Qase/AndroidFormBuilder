@@ -51,7 +51,7 @@ class LabelSpinnerElement<T>(private val label: String,
             val color = ContextCompat.getColor(context, formStyleBundle.secondaryTextColor)
             spinner.setArrowTintColor(color)
             spinner.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
-            spinner.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+//            spinner.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         }
 
         spinner.attachDataSource(availableValues)
