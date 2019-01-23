@@ -75,24 +75,28 @@ class MainActivity : Activity() {
         addElement(HeaderElement("Static elements"), true)
         addElement(TextElement("TextElement value"), true)
         addElement(LabelTextElement("LabelTextElement label", "LabelTextElement text"), true)
-        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"), true)
+        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"))
+        addSpace()
 
         //input elements
         addElement(HeaderElement("Input elements"), true)
         addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
         addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
         addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback))
+        addSpace()
 
 
         //input validable elements
         addElement(HeaderElement("Input validable elements"), true)
-        addElement(EditTextElement("Hint", "Edit text element text", arrayListOf(maxLengthValidator, notEmptyValidator)), true)
+        addElement(EditTextElement("Hint", "Edit text element text", arrayListOf(maxLengthValidator, notEmptyValidator)))
+        addSpace()
 
         //action elements
         addElement(HeaderElement("Action elements"), true)
         addElement(ActionElement(showToastActionCallback, "ActionElement label", "ActionElement text"), true)
         addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
-        addElement(ActionElement(validateActionCallback, "Validate all elements", ""), true)
+        addElement(ActionElement(validateActionCallback, "Validate all elements", ""))
+        addSpace()
 
         return@with buildForm(this@MainActivity, formWrapper)
     }
