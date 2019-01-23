@@ -8,4 +8,12 @@
     <color name="colorBackground">#ffffff</color>
     <color name="colorGreen">#2ca123</color>
     <color name="colorOrange">#ffbc03</color>
+
+
+    <color name="oneTextPrimary">#ffffff</color>
+    <color name="oneTextSecondary">#363636</color>
+    <color name="oneBackgroundPrimary">#CC527A</color>
+    <color name="oneBackgroundSecondary">#A8A7A7</color>
+    <color name="oneDivider">#474747</color>
+
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
+import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.element.*
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
@@ -17,7 +18,7 @@ class MainActivity : Activity() {
 
     private lateinit var form: Form
 
-    private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it"}.toList()
+    private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it" }.toList()
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
     private val maxLengthValidator = MaxLengthFormValidator("This filed has more than 10 characters.", 10)
@@ -98,6 +99,6 @@ class MainActivity : Activity() {
         addElement(ActionElement(validateActionCallback, "Validate all elements", ""))
         addSpace()
 
-        return@with buildForm(this@MainActivity, formWrapper)
+        return@with buildForm(this@MainActivity, formWrapper, FormStyleBundle.colorBundleOne())
     }
 }
