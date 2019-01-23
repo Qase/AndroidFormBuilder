@@ -67,6 +67,8 @@ class MainActivity : Activity() {
 
     private fun buildForm() = with(FormBuilder()) {
 
+
+        addElement(LabelCheckboxElement("TITLE", true, showToastCheckboxCallback))
         //App Header
         addElement(HeaderElement("AndroidFormBuilder test app"), true)
 

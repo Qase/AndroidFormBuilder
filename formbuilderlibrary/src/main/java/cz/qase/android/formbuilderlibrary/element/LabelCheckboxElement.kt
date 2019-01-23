@@ -14,14 +14,14 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
-class HeadCheckboxElement(
+class LabelCheckboxElement(
+        private val title: String,
         private val checked: Boolean,
-        val title: String,
-        val hint: String? = null,
-        val checkboxCallback: CheckboxCallback,
-        protected val groupComponent: Int = R.layout.form_group_item,
-        protected val headerComponent: Int = R.layout.form_header_item,
-        protected val checkboxComponent: Int = R.layout.form_checkbox_item
+        private val checkboxCallback: CheckboxCallback,
+        private val groupComponent: Int = R.layout.form_group_item_inline,
+        private val labelComponent: Int = R.layout.form_inline_label,
+        private val checkboxComponent: Int = R.layout.form_checkbox_item,
+        private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<Boolean>() {
 
     private lateinit var checkbox: CheckBox
@@ -34,18 +34,25 @@ class HeadCheckboxElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareHeader(inflater, context, formStyleBundle)
-        val checkboxView = prepareCheckbox(inflater, context, formStyleBundle)
-        view.addView(headerView)
+        val labelView = prepareLabel(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
+        val checkboxView = prepareCheckbox(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        view.addView(labelView)
         view.addView(checkboxView)
         return view
     }
 
-    private fun prepareCheckbox(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle): CheckBox {
-        checkbox = inflater.inflate(checkboxComponent, null) as CheckBox
+    private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
+        val headerView = inflater.inflate(labelComponent, root, false) as TextView
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        headerView.text = title
+        return headerView
+    }
+
+    private fun prepareCheckbox(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): CheckBox {
+        checkbox = inflater.inflate(checkboxComponent, root, false) as CheckBox
         checkbox.setTextColor(ContextCompat.getColor(context, formStyleBundle.secondaryTextColor))
         checkbox.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
-        checkbox.text = hint
         checkbox.isChecked = checked
         checkbox.setOnClickListener {
             checkboxCallback.callback(checkbox.isChecked)
@@ -53,11 +60,6 @@ class HeadCheckboxElement(
         return checkbox
     }
 
-    private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle): TextView {
-        val headerView = inflater.inflate(headerComponent, null) as TextView
-        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        headerView.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
-        headerView.text = title
-        return headerView
-    }
+
+
 }
