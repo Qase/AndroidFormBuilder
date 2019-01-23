@@ -10,10 +10,30 @@
     <color name="colorOrange">#ffbc03</color>
 
 
+
     <color name="oneTextPrimary">#ffffff</color>
     <color name="oneTextSecondary">#363636</color>
-    <color name="oneBackgroundPrimary">#CC527A</color>
-    <color name="oneBackgroundSecondary">#A8A7A7</color>
+    <color name="oneBackgroundPrimary">#FE4365</color>
+    <color name="oneBackgroundSecondary">#FC9D9A</color>
     <color name="oneDivider">#474747</color>
+
+    <color name="twoTextPrimary">#ffffff</color>
+    <color name="twoTextSecondary">#363636</color>
+    <color name="twoBackgroundPrimary">#CC527A</color>
+    <color name="twoBackgroundSecondary">#A8A7A7</color>
+    <color name="twoDivider">#474747</color>
+
+    <color name="threeTextPrimary">#ffffff</color>
+    <color name="threeTextSecondary">#363636</color>
+    <color name="threeBackgroundPrimary">#45ADA8</color>
+    <color name="threeBackgroundSecondary">#A8A7A7</color>
+    <color name="threeDivider">#474747</color>
+
+
+    <color name="fourTextPrimary">#ffffff</color>
+    <color name="fourTextSecondary">#363636</color>
+    <color name="fourBackgroundPrimary">#00701a</color>
+    <color name="fourBackgroundSecondary">#43a047</color>
+    <color name="fourDivider">#474747</color>
 
 </resources>
