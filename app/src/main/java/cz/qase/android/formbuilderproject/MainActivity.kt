@@ -13,12 +13,15 @@ import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.MaxLengthFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : Activity() {
 
     private lateinit var form: Form
 
+    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z')
     private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it" }.toList()
+    private val longerStringValues = (1..5).map { randomString(25) }
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
     private val maxLengthValidator = MaxLengthFormValidator("This filed has more than 10 characters.", 10)
@@ -76,7 +79,7 @@ class MainActivity : Activity() {
         addElement(HeaderElement("Static elements"), true)
         addElement(TextElement("TextElement value"), true)
         addElement(LabelTextElement("LabelTextElement label", "LabelTextElement text"), true)
-        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", "OpenableHeaderTextElement value"))
+        addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", longerStringValues))
         addSpace()
 
         //input elements
@@ -101,4 +104,10 @@ class MainActivity : Activity() {
 
         return@with buildForm(this@MainActivity, formWrapper, FormStyleBundle.colorBundleOne())
     }
+
+
+    private fun randomString(length: Int) = (1..length)
+            .map { Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("")
 }

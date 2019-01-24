@@ -13,7 +13,7 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 class OpenableHeaderTextElement(private val label: String,
-                                private val value: String,
+                                private val values: List<String>,
                                 private val groupComponent: Int = R.layout.form_group_item,
                                 private val headerGroupComponent: Int = R.layout.form_group_item_inline,
                                 private val headerComponent: Int = R.layout.form_inline_label,
@@ -25,7 +25,7 @@ class OpenableHeaderTextElement(private val label: String,
     private lateinit var context: Context
     private lateinit var fsb: FormStyleBundle
 
-    private lateinit var textView: TextView
+    private lateinit var textViewWrapper: LinearLayout
     private lateinit var headerGroup: ViewGroup
     private lateinit var symbolWrapper: LinearLayout
     private lateinit var symbolView: ImageView
@@ -48,11 +48,11 @@ class OpenableHeaderTextElement(private val label: String,
     }
 
     private val headerClickAction = View.OnClickListener {
-        if (textView.visibility == View.GONE) {
-            textView.visibility = View.VISIBLE
+        if (textViewWrapper.visibility == View.GONE) {
+            textViewWrapper.visibility = View.VISIBLE
             symbolView.rotation = symbolView.rotation + 180
         } else {
-            textView.visibility = View.GONE
+            textViewWrapper.visibility = View.GONE
             symbolView.rotation = symbolView.rotation + 180
         }
     }
@@ -66,7 +66,7 @@ class OpenableHeaderTextElement(private val label: String,
 
         val view = inflater.inflate(groupComponent, null) as ViewGroup
         headerGroup = prepareHeaderGroup(inflater, view)
-        textView = prepareText(inflater, view)
+        textViewWrapper = prepareTextViewWrapper(inflater, view)
         val headerView = prepareLabel(inflater, headerGroup)
         symbolWrapper = prepareSymbol(inflater, headerGroup)
 
@@ -74,7 +74,7 @@ class OpenableHeaderTextElement(private val label: String,
         headerGroup.addView(symbolWrapper)
 
         view.addView(headerGroup)
-        view.addView(textView)
+        view.addView(textViewWrapper)
         return view
     }
 
@@ -87,12 +87,25 @@ class OpenableHeaderTextElement(private val label: String,
         return headerGroup
     }
 
-    private fun prepareText(inflater: LayoutInflater, root: ViewGroup): TextView {
+    private fun prepareTextViewWrapper(inflater: LayoutInflater, root: ViewGroup): LinearLayout {
+        val textWrapper = LinearLayout(context)
+        textWrapper.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        textWrapper.orientation = LinearLayout.VERTICAL
+        textWrapper.gravity = Gravity.END
+        textWrapper.visibility = View.GONE
+
+        for (text in values){
+            val textView = prepareText(inflater, textWrapper, text)
+            textWrapper.addView(textView)
+        }
+        return textWrapper
+    }
+
+    private fun prepareText(inflater: LayoutInflater, root: ViewGroup, text: String): TextView {
         val textView = inflater.inflate(textComponent, root, false) as TextView
         textView.setTextColorResourceId(context, fsb.secondaryTextColor)
         textView.setBackgroundColorResourceId(context, fsb.secondaryBackgroundColor)
-        textView.text = value
-        textView.visibility = View.GONE
+        textView.text = text
         return textView
     }
 
