@@ -1,7 +1,6 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ class LabelSpinnerElement<T>(private val label: String,
                              private val groupComponent: Int = R.layout.form_group_item_inline,
                              private val labelComponent: Int = R.layout.form_inline_label,
                              private val spinnerComponent: Int = R.layout.form_inline_spinner,
-                             private val arrowDrawable: Int? = null,
                              private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<T>() {
 
@@ -43,17 +41,6 @@ class LabelSpinnerElement<T>(private val label: String,
 
     private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
-        if (spinnerComponent != R.layout.form_inline_spinner) {
-            if (arrowDrawable != null){
-                val drawable = ContextCompat.getDrawable(context, arrowDrawable)
-                spinner.setArrowDrawable(drawable)
-            }
-            val color = ContextCompat.getColor(context, formStyleBundle.secondaryTextColor)
-            spinner.setArrowTintColor(color)
-            spinner.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
-//            spinner.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
-        }
-
         spinner.attachDataSource(availableValues)
         spinner.selectedIndex = availableValues.indexOf(value)
 
