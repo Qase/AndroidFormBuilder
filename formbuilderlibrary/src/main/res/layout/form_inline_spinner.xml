@@ -6,9 +6,11 @@
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
     android:minWidth="150dp"
+    android:padding="10dp"
     android:textAlignment="textEnd"
-    app:layout_constraintTop_toTopOf="parent"
+    android:backgroundTint="#BFFFFFFF"
     app:arrowDrawable="@drawable/ic_arrow_down"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:popupTextAlignment="end" />

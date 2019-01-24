@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 class Divider(private val dividerComponent: Int = R.layout.form_divider) : FormElementNoValue() {
@@ -12,7 +13,7 @@ class Divider(private val dividerComponent: Int = R.layout.form_divider) : FormE
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(dividerComponent, null)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.dividerColor))
+        view.setBackgroundColorResourceId(context, formStyleBundle.dividerColor)
         return view
     }
 }

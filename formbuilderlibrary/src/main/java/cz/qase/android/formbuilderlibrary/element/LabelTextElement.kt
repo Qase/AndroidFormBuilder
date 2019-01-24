@@ -1,12 +1,15 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 open class LabelTextElement(private val label: String,
@@ -24,7 +27,7 @@ open class LabelTextElement(private val label: String,
         val headerView = prepareLabel(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
         val textView = prepareText(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(textView)
         return view
@@ -32,14 +35,14 @@ open class LabelTextElement(private val label: String,
 
     private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val textView = inflater.inflate(textComponent, root, false) as TextView
-        textView.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
+        textView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         textView.text = text
         this.textView = textView
         return textView
     }
 
     fun updateLabel(label: String) {
-        textView?.text = text
+        textView?.text = label
     }
 
     fun updateText(text: String) {
@@ -48,7 +51,7 @@ open class LabelTextElement(private val label: String,
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
         labelView = headerView
         return headerView

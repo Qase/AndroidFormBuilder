@@ -8,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
+import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import org.angmarch.views.NiceSpinner
@@ -19,7 +21,6 @@ class LabelSpinnerElement<T>(private val label: String,
                              private val groupComponent: Int = R.layout.form_group_item_inline,
                              private val labelComponent: Int = R.layout.form_inline_label,
                              private val spinnerComponent: Int = R.layout.form_inline_spinner,
-                             private val arrowDrawable: Int = R.drawable.ic_arrow_down,
                              private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<T>() {
 
@@ -32,7 +33,7 @@ class LabelSpinnerElement<T>(private val label: String,
                 ?: formStyleBundle, view)
         val spinnerView = prepareSpinner(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
-        view.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(spinnerView)
         return view
@@ -40,13 +41,6 @@ class LabelSpinnerElement<T>(private val label: String,
 
     private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
-        if (spinnerComponent != R.layout.form_inline_spinner) {
-            spinner.setArrowDrawable(context.resources.getDrawable(arrowDrawable))
-            spinner.setArrowTintColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-            spinner.setTextColor(context.resources.getColor(formStyleBundle.secondaryTextColor))
-            spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
-        }
-
         spinner.attachDataSource(availableValues)
         spinner.selectedIndex = availableValues.indexOf(value)
 
@@ -64,7 +58,7 @@ class LabelSpinnerElement<T>(private val label: String,
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(labelComponent, root, false) as TextView
-        headerView.setTextColor(context.resources.getColor(formStyleBundle.primaryTextColor))
+        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
         return headerView
     }
