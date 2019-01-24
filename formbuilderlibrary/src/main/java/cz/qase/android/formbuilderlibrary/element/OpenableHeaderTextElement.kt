@@ -50,10 +50,10 @@ class OpenableHeaderTextElement(private val label: String,
     private val headerClickAction = View.OnClickListener {
         if (textViewWrapper.visibility == View.GONE) {
             textViewWrapper.visibility = View.VISIBLE
-            symbolView.rotation = symbolView.rotation + 180
+            symbolView.rotation = 180f
         } else {
             textViewWrapper.visibility = View.GONE
-            symbolView.rotation = symbolView.rotation + 180
+            symbolView.rotation = 0f
         }
     }
 
@@ -123,7 +123,7 @@ class OpenableHeaderTextElement(private val label: String,
         symbolWrapper.gravity = Gravity.END
 
         symbolView = inflater.inflate(symbolComponent, symbolWrapper, false) as ImageView
-        val symbolColor = ContextCompat.getColor(context, fsb.secondaryTextColor)
+        val symbolColor = ContextCompat.getColor(context, fsb.primaryBackgroundColor)
         symbolView.setColorFilter(symbolColor)
         symbolWrapper.addView(symbolView)
         return symbolWrapper
