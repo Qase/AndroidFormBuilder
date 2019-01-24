@@ -57,7 +57,7 @@ open class NavigationElement(private val actionCallback: ActionCallback,
 
     private fun prepareSymbol(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): ImageView {
         val symbolView = inflater.inflate(symbolComponent, root, false) as ImageView
-        val color = ContextCompat.getColor(context, formStyleBundle.secondaryTextColor)
+        val color = ContextCompat.getColor(context, formStyleBundle.primaryBackgroundColor)
         symbolView.setColorFilter(color)
         return symbolView
     }
