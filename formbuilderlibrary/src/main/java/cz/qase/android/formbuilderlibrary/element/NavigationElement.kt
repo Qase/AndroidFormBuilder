@@ -15,12 +15,12 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
-class NavigationElement(private val actionCallback: ActionCallback,
-                        private val label: String,
-                        private val groupComponent: Int = R.layout.form_group_item_inline,
-                        private val headerComponent: Int = R.layout.form_inline_label,
-                        private val symbolComponent: Int = R.layout.form_navigation_symbol,
-                        private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
+open class NavigationElement(private val actionCallback: ActionCallback,
+                             private val label: String,
+                             private val groupComponent: Int = R.layout.form_group_item_inline,
+                             private val headerComponent: Int = R.layout.form_inline_label,
+                             private val symbolComponent: Int = R.layout.form_navigation_symbol,
+                             private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

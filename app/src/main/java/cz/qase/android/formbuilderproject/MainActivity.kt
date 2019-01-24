@@ -97,9 +97,9 @@ class MainActivity : Activity() {
 
         //action elements
         addElement(HeaderElement("Action elements"), true)
-        addElement(ActionElement(showToastActionCallback, "ActionElement label", "ActionElement text"), true)
+        addElement(ActionElement(showToastActionCallback, "ActionElement label"), true)
         addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
-        addElement(ActionElement(validateActionCallback, "Validate all elements", ""))
+        addElement(ActionElement(validateActionCallback, "Validate all elements"))
         addSpace()
 
         return@with buildForm(this@MainActivity, formWrapper, FormStyleBundle.colorBundleOne())
