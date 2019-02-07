@@ -1,0 +1,29 @@
+language: android
+android:
+  components:
+  - tools
+  - platform-tools
+  - extra
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+
+  # Specify at least one system image,
+  # if you need to run emulator(s) during your tests
+  - sys-img-x86-android-26
+  - sys-img-armeabi-v7a-android-17
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+before_install:
+- chmod +x gradlew
+- yes | sdkmanager "platforms;android-28"
+script:
+- "./gradlew build -p formbuilderlibrary"
+notifications:
+  email: false
+  slack:
+    on_success: never
+    on_failure: always
+    rooms: quantiteam:5cgN9eeINDyZcQYVZxPXMlXy
