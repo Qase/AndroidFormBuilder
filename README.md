@@ -3,6 +3,8 @@
 -->
 
 [![Release](https://jitpack.io/v/Qase/AndroidFormBuilder.svg)](https://jitpack.io/#Qase/AndroidFormBuilder)
+[![Build Status](https://travis-ci.org/Qase/AndroidFormBuilder.svg?branch=master)](https://travis-ci.org/Qase/AndroidFormBuilder)
+[![codebeat badge](https://codebeat.co/badges/06a38cfa-46ff-4019-9e71-eef48bae8f0f)](https://codebeat.co/projects/github-com-qase-androidformbuilder-master)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Maintainer: kidal5](https://img.shields.io/badge/Maintainer-balakz-blue.svg)](mailto:balakz@quanti.cz)
