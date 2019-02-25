@@ -53,7 +53,9 @@ open class EditTextElement(
             override fun afterTextChanged(s: Editable) {
                 text = s.toString()
                 validate()
-                valueChangeListener?.callback(s.toString())
+                if(!invalid) {
+                    valueChangeListener?.callback(s.toString())
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
