@@ -46,7 +46,7 @@ class LabelSwitchElement(private val label: String,
     private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): SwitchCompat {
         val switchView = inflater.inflate(switchComponent, root, false) as SwitchCompat
         switchView.isChecked = checked
-        switchView.setColor(formStyleBundle.primaryBackgroundColor, context)
+        switchView.setColor(formStyleBundle.primaryTextColor, context)
         switchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         switchView.setOnCheckedChangeListener { _, isChecked ->
             checked = isChecked
