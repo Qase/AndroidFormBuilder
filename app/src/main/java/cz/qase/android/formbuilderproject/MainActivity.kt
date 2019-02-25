@@ -103,6 +103,7 @@ class MainActivity : Activity() {
         //action elements
         addElement(HeaderElement("Action elements"), true)
         addElement(ActionElement(showToastActionCallback, "ActionElement label"), true)
+        addElement(ActionTextElement(showToastActionCallback, "Action", "Click me"), true)
         addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
         addElement(ActionElement(validateActionCallback, "Validate all elements"))
         addSpace()
