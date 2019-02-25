@@ -13,6 +13,8 @@ abstract class FormElementValidatable<T>(val formValidators: MutableList<FormVal
 
     @Throws(ValidationException::class)
     override fun validate() {
+        invalid = false
+        invalidMessage = null
         for (formValidator in formValidators) {
             try {
                 formValidator.validate(getVal())

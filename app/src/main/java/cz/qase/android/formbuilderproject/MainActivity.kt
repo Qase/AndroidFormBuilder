@@ -92,7 +92,12 @@ class MainActivity : Activity() {
 
         //input validable elements
         addElement(HeaderElement("Input validable elements"), true)
-        addElement(EditTextElement("Hint", "Edit text element text", arrayListOf(maxLengthValidator, notEmptyValidator)))
+        addElement(EditTextElement("Hint", "Edit text element text", object:ValueCallback<String>{
+            override fun callback(value: String) {
+                Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+            }
+
+        }, arrayListOf(maxLengthValidator, notEmptyValidator)))
         addSpace()
 
         //action elements

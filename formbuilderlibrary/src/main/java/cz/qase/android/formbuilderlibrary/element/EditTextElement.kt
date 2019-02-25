@@ -10,21 +10,25 @@ import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
+import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
 open class EditTextElement(
         protected val hint: String?,
         protected val hintRes: Int?,
         protected var text: String? = null,
+        private val valueChangeListener: ValueCallback<String>?,
         formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(formValidators) {
 
     constructor(hint: String?,
                 text: String? = null,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(hint, null, text, formValidators)
+                valueChangeListener: ValueCallback<String>?,
+                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(hint, null, text, valueChangeListener, formValidators)
 
     constructor(hintRes: Int?,
                 text: String? = null,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(null, hintRes, text, formValidators)
+                valueChangeListener: ValueCallback<String>?,
+                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(null, hintRes, text, valueChangeListener, formValidators)
 
 
     var editText: TextInputEditText? = null
@@ -34,7 +38,7 @@ open class EditTextElement(
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
         textInputLayout?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
-        textInputLayout?.setPadding(10,0,10,0)
+        textInputLayout?.setPadding(10, 0, 10, 0)
 
         editText = TextInputEditText(context)
         editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
@@ -46,9 +50,10 @@ open class EditTextElement(
         }
         editText?.setText(text)
         editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s: Editable) {
                 text = s.toString()
                 validate()
+                valueChangeListener?.callback(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
