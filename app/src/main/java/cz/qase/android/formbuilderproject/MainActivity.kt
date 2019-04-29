@@ -19,7 +19,7 @@ class MainActivity : Activity() {
 
     private lateinit var form: Form
 
-    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z')
+    private val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
     private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it" }.toList()
     private val longerStringValues = (1..5).map { randomString(25) }
 
@@ -92,12 +92,18 @@ class MainActivity : Activity() {
 
         //input validable elements
         addElement(HeaderElement("Input validable elements"), true)
-        addElement(EditTextElement("Hint", "Edit text element text", object:ValueCallback<String>{
+        addElement(EditTextElement("Hint", "Edit text element text", object : ValueCallback<String> {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
 
         }, arrayListOf(maxLengthValidator, notEmptyValidator)))
+        addDivider()
+        addElement(LabelInputElement("Email", "test@test.cz","", object : ValueCallback<String> {
+            override fun callback(value: String) {
+                Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+            }
+        }, arrayListOf(notEmptyValidator)))
         addSpace()
 
         //action elements
@@ -108,7 +114,7 @@ class MainActivity : Activity() {
         addElement(ActionElement(validateActionCallback, "Validate all elements"))
         addSpace()
 
-        return@with buildForm(this@MainActivity, formWrapper, FormStyleBundle.colorBundleOne())
+        return@with buildForm(this@MainActivity, formWrapper, FormStyleBundle.colorBundleThree())
     }
 
 
