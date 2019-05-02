@@ -58,7 +58,7 @@ class LabelInputElement(private val label: String,
                 object : TextWatcher {
                     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                         value = s.toString()
-                        validate()
+                        positiveValidation()
                         if (!invalid) {
                             valueChangeListener.callback(s.toString())
                         }
@@ -81,6 +81,13 @@ class LabelInputElement(private val label: String,
 
     fun updateText(text: String) {
         textInputEditText?.setText(text)
+    }
+
+    private fun positiveValidation(){
+        super.validate()
+        if (!invalid) {
+            textInputLayout?.error = null
+        }
     }
 
     override fun validate() {

@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderproject
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
@@ -13,9 +14,12 @@ import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.MaxLengthFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import kotlinx.android.synthetic.main.activity_main.*
+import org.joda.time.DateTime
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.random.Random
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var form: Form
 
@@ -57,6 +61,11 @@ class MainActivity : Activity() {
             Toast.makeText(this@MainActivity, value, Toast.LENGTH_LONG).show()
         }
     }
+    private val showToastDateTimeValueCallback = object : ValueCallback<DateTime> {
+        override fun callback(value: DateTime) {
+            Toast.makeText(this@MainActivity, SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()), Toast.LENGTH_LONG).show()
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +95,8 @@ class MainActivity : Activity() {
         addElement(HeaderElement("Input elements"), true)
         addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
         addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
-        addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback))
+        addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
+        addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, valueChangeListener = showToastDateTimeValueCallback))
         addSpace()
 
 
@@ -99,7 +109,7 @@ class MainActivity : Activity() {
 
         }, arrayListOf(maxLengthValidator, notEmptyValidator)))
         addDivider()
-        addElement(LabelInputElement("Email", "test@test.cz","", object : ValueCallback<String> {
+        addElement(LabelInputElement("Email", "test@test.cz", "", object : ValueCallback<String> {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
