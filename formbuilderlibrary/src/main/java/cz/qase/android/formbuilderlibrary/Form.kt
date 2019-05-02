@@ -20,8 +20,16 @@ class Form(val context: Context,
 
     @Throws(ValidationException::class)
     fun validate() {
+        var validationException: ValidationException? = null
         for (formElement in elements) {
-            formElement.validate()
+            try {
+                formElement.validate()
+            } catch (e: ValidationException) {
+                validationException = e
+            }
+        }
+        if(validationException!=null){
+            throw validationException
         }
     }
 

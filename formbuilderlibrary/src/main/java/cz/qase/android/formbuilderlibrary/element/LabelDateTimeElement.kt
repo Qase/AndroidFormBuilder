@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
@@ -58,6 +59,7 @@ class LabelDateTimeElement(private val label: String,
                     view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
                 }
                 MotionEvent.ACTION_DOWN -> {
+                    textView.requestFocus()
                     view.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
                 }
             }
@@ -78,6 +80,7 @@ class LabelDateTimeElement(private val label: String,
             val dateTime = DateTime(newDate)
             value = dateTime
             textView.text = sdf.format(newDate)
+            positiveValidation()
             valueChangeListener.callback(dateTime)
         }
         textView.setOnClickListener {
@@ -100,6 +103,25 @@ class LabelDateTimeElement(private val label: String,
 
     fun updateText(text: String) {
         textView?.text = text
+    }
+
+    private fun positiveValidation() {
+        try {
+            super.validate()
+            textView?.error = null
+        } catch (e: ValidationException) {
+        }
+    }
+
+    override fun validate() {
+        try {
+            super.validate()
+            textView?.error = null
+        } catch (e: ValidationException) {
+            textView?.text = e.message
+            textView?.error = e.message
+            throw e
+        }
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {

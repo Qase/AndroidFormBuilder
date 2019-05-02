@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
+import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
@@ -52,10 +53,8 @@ open class EditTextElement(
         editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 text = s.toString()
-                validate()
-                if(!invalid) {
-                    valueChangeListener?.callback(s.toString())
-                }
+                positiveValidation()
+                valueChangeListener?.callback(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -68,14 +67,21 @@ open class EditTextElement(
         return textInputLayout!!
     }
 
+    private fun positiveValidation() {
+        try {
+            super.validate()
+            textInputLayout?.error = null
+        } catch (e: ValidationException) {
+        }
+    }
+
     override fun validate() {
-        super.validate()
-        if (textInputLayout != null) {
-            if (invalid) {
-                textInputLayout?.error = invalidMessage
-            } else {
-                textInputLayout?.error = null
-            }
+        try {
+            super.validate()
+            textInputLayout?.error = null
+        } catch (e: ValidationException) {
+            textInputLayout?.error = e.message
+            throw e
         }
     }
 

@@ -13,6 +13,7 @@ import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.MaxLengthFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
+import cz.qase.android.formbuilderlibrary.validator.NotInPastValidator
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joda.time.DateTime
 import java.text.SimpleDateFormat
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
         addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
         addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
-        addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, valueChangeListener = showToastDateTimeValueCallback))
+        addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, showToastDateTimeValueCallback, formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))))
         addSpace()
 
 

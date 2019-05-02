@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
@@ -40,7 +41,8 @@ class LabelInputElement(private val label: String,
         val view = inflater.inflate(groupComponent, null) as ViewGroup
         val headerView = prepareLabel(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
-        val inputView = prepareText(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
+        val inputView = prepareText(inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view)
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(inputView)
@@ -59,9 +61,8 @@ class LabelInputElement(private val label: String,
                     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                         value = s.toString()
                         positiveValidation()
-                        if (!invalid) {
-                            valueChangeListener.callback(s.toString())
-                        }
+                        valueChangeListener.callback(s.toString())
+
                     }
 
                     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -83,19 +84,21 @@ class LabelInputElement(private val label: String,
         textInputEditText?.setText(text)
     }
 
-    private fun positiveValidation(){
-        super.validate()
-        if (!invalid) {
+    private fun positiveValidation() {
+        try {
+            super.validate()
             textInputLayout?.error = null
+        } catch (e: ValidationException) {
         }
     }
 
     override fun validate() {
-        super.validate()
-        if (invalid) {
-            textInputLayout?.error = invalidMessage
-        } else {
+        try {
+            super.validate()
             textInputLayout?.error = null
+        } catch (e: ValidationException) {
+            textInputLayout?.error = e.message
+            throw e
         }
     }
 
