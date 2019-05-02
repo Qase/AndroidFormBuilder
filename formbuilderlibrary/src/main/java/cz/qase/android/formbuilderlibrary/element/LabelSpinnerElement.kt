@@ -43,6 +43,7 @@ class LabelSpinnerElement<T>(private val label: String,
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
         spinner.attachDataSource(availableValues)
         spinner.selectedIndex = availableValues.indexOf(value)
+        spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
 
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
