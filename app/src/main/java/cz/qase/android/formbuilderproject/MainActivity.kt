@@ -122,8 +122,6 @@ class MainActivity : AppCompatActivity() {
         addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
         addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, showToastDateTimeValueCallback, formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))))
         addSpace()
-        addElement(TextAreaElement("TextArea", null, null, showToastStringValueCallback, maxLength = 320))
-        addSpace()
 
 
         //input validable elements
@@ -132,14 +130,13 @@ class MainActivity : AppCompatActivity() {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
-
-        }, arrayListOf(maxLengthValidator, notEmptyValidator)))
-        addDivider()
+        }, arrayListOf(maxLengthValidator, notEmptyValidator)), true)
         addElement(LabelInputElement("Email", "test@test.cz", "", object : ValueCallback<String> {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
-        }, arrayListOf(emailValidator)))
+        }, arrayListOf(emailValidator)), true)
+        addElement(TextAreaElement("Fill textarea", null, showToastStringValueCallback, maxLength = 320))
         addSpace()
 
         //action elements

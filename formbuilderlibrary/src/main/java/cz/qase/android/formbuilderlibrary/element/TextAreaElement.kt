@@ -20,7 +20,6 @@ import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
 class TextAreaElement(
-        private val title: String,
         private val hint: String?,
         private var value: String? = null,
         private val valueChangeListener: ValueCallback<String>? = null,
@@ -37,7 +36,6 @@ class TextAreaElement(
         return textInputEditText?.text.toString()
     }
 
-    private var headerView: TextView? = null
     private var footerView: TextView? = null
     private var textInputEditText: TextInputEditText? = null
     private var textInputLayout: TextInputLayout? = null
@@ -45,14 +43,11 @@ class TextAreaElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareHeader(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
         val inputView = prepareText(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
         val footerView = prepareFooter(inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view)
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
-        view.addView(headerView)
         view.addView(inputView)
         view.addView(footerView)
         return view
@@ -109,10 +104,6 @@ class TextAreaElement(
 
     }
 
-    fun updateTitle(label: String) {
-        headerView?.text = label
-    }
-
     fun updateText(text: String) {
         textInputEditText?.setText(text)
     }
@@ -133,14 +124,5 @@ class TextAreaElement(
             textInputLayout?.error = e.message
             throw e
         }
-    }
-
-    private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
-        val headerView = inflater.inflate(headerComponent, root, false) as TextView
-        headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        headerView.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
-        headerView.text = title
-        this.headerView = headerView
-        return headerView
     }
 }
