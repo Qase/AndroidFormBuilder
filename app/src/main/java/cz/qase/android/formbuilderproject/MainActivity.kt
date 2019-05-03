@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
 
     private val validateActionCallback = object : ActionCallback, Form.Callback {
         override fun successCallback() {
-            Toast.makeText(this@MainActivity, "Validate OK", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Validate OK", Toast.LENGTH_SHORT).show()
         }
 
         override fun errorCallback(message: String?) {
-            Toast.makeText(this@MainActivity, "Validate not ok $message", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Validate not ok $message", Toast.LENGTH_SHORT).show()
         }
 
         override fun callback() {
@@ -47,24 +47,33 @@ class MainActivity : AppCompatActivity() {
 
     private val showToastActionCallback = object : ActionCallback {
         override fun callback() {
-            Toast.makeText(this@MainActivity, "Action performed", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Action performed", Toast.LENGTH_SHORT).show()
         }
     }
 
     private val showToastCheckboxCallback = object : CheckboxCallback {
+        private var toast: Toast? = null
         override fun callback(checked: Boolean) {
-            Toast.makeText(this@MainActivity, "Selected: $checked", Toast.LENGTH_LONG).show()
+            toast?.cancel()
+            toast = Toast.makeText(this@MainActivity, "Selected: $checked", Toast.LENGTH_SHORT)
+            toast?.show()
         }
     }
 
     private val showToastStringValueCallback = object : ValueCallback<String> {
+        private var toast: Toast? = null
         override fun callback(value: String) {
-            Toast.makeText(this@MainActivity, value, Toast.LENGTH_LONG).show()
+            toast?.cancel()
+            toast = Toast.makeText(this@MainActivity, value, Toast.LENGTH_SHORT)
+            toast?.show()
         }
     }
     private val showToastDateTimeValueCallback = object : ValueCallback<DateTime> {
+        private var toast: Toast? = null
         override fun callback(value: DateTime) {
-            Toast.makeText(this@MainActivity, SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()), Toast.LENGTH_LONG).show()
+            toast?.cancel()
+            toast = Toast.makeText(this@MainActivity, SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()), Toast.LENGTH_SHORT)
+            toast?.show()
         }
     }
 
@@ -98,6 +107,8 @@ class MainActivity : AppCompatActivity() {
         addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
         addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
         addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, showToastDateTimeValueCallback, formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))))
+        addSpace()
+        addElement(TextAreaElement("TextArea", null, null, showToastStringValueCallback, maxLength = 320))
         addSpace()
 
 

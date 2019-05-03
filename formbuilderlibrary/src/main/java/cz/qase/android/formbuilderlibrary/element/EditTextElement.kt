@@ -40,7 +40,6 @@ open class EditTextElement(
         textInputLayout?.isErrorEnabled = true
         textInputLayout?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         textInputLayout?.setPadding(10, 0, 10, 0)
-
         editText = TextInputEditText(context)
         editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         textInputLayout?.addView(editText)
