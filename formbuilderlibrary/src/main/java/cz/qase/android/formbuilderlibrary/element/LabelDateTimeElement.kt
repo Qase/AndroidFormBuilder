@@ -24,7 +24,7 @@ import java.util.Locale
 class LabelDateTimeElement(private val label: String,
                            private var hint: String,
                            private var supportFragmentManager: FragmentManager,
-                           private val valueChangeListener: ValueCallback<DateTime>,
+                           private val valueChangeListener: ValueCallback<DateTime>?,
                            private var value: DateTime? = null,
                            private var sdf: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()),
                            formValidators: MutableList<FormValidator<DateTime>> = ArrayList(),
@@ -81,7 +81,7 @@ class LabelDateTimeElement(private val label: String,
             value = dateTime
             textView.text = sdf.format(newDate)
             positiveValidation()
-            valueChangeListener.callback(dateTime)
+            valueChangeListener?.callback(dateTime)
         }
         textView.setOnClickListener {
             DateTimePickerDialog.show(
