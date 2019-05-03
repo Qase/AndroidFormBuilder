@@ -76,6 +76,22 @@ class LabelDateTimeElement(private val label: String,
         } else {
             hint
         }
+        textView.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    root.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+                    textView.performClick()
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    root.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+                }
+                MotionEvent.ACTION_DOWN -> {
+                    textView.requestFocus()
+                    root.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
+                }
+            }
+            true
+        }
         val callback: (date: Date) -> Unit = { newDate ->
             val dateTime = DateTime(newDate)
             value = dateTime
