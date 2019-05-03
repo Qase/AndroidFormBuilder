@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,12 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
-import android.text.InputFilter
 
 class TextAreaElement(
         private val title: String,
         private val hint: String?,
         private var value: String? = null,
-        private val valueChangeListener: ValueCallback<String>?,
+        private val valueChangeListener: ValueCallback<String>? = null,
         private val numberOfLines: Int = 3,
         private val maxLength: Int? = null,
         formValidators: MutableList<FormValidator<String>> = ArrayList(),

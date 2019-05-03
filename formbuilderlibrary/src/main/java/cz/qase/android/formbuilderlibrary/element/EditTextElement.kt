@@ -16,20 +16,10 @@ import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
 open class EditTextElement(
         protected val hint: String?,
-        protected val hintRes: Int?,
         protected val text: String? = null,
-        private val valueChangeListener: ValueCallback<String>?,
+        private val valueChangeListener: ValueCallback<String>? = null,
         formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(formValidators) {
 
-    constructor(hint: String?,
-                text: String? = null,
-                valueChangeListener: ValueCallback<String>?,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(hint, null, text, valueChangeListener, formValidators)
-
-    constructor(hintRes: Int?,
-                text: String? = null,
-                valueChangeListener: ValueCallback<String>?,
-                formValidators: MutableList<FormValidator<String>> = ArrayList()) : this(null, hintRes, text, valueChangeListener, formValidators)
 
 
     var editText: TextInputEditText? = null
@@ -43,11 +33,7 @@ open class EditTextElement(
         editText = TextInputEditText(context)
         editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         textInputLayout?.addView(editText)
-        textInputLayout?.hint = if (hintRes != null) {
-            context.resources.getString(hintRes)
-        } else {
-            hint
-        }
+        textInputLayout?.hint = hint
         editText?.setText(text)
         editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
