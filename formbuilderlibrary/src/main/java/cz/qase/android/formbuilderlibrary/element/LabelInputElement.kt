@@ -20,8 +20,8 @@ import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
 
 class LabelInputElement(private val label: String,
-                        private var hint: String,
-                        private var value: String,
+                        private val hint: String,
+                        private val value: String? = null,
                         private val valueChangeListener: ValueCallback<String>,
                         formValidators: MutableList<FormValidator<String>> = ArrayList(),
                         private val groupComponent: Int = R.layout.form_group_item_inline,
@@ -29,7 +29,7 @@ class LabelInputElement(private val label: String,
                         private val inputComponent: Int = R.layout.form_text_input_layout,
                         private val formStyleBundle: FormStyleBundle? = null) : FormElementValidatable<String>(formValidators) {
     override fun getVal(): String? {
-        return value
+        return textInputEditText?.text.toString()
     }
 
     private var labelView: TextView? = null
@@ -59,7 +59,6 @@ class LabelInputElement(private val label: String,
         textInputEditText?.addTextChangedListener(
                 object : TextWatcher {
                     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                        value = s.toString()
                         positiveValidation()
                         valueChangeListener.callback(s.toString())
 

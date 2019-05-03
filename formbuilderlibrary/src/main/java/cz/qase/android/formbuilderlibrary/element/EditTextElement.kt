@@ -17,7 +17,7 @@ import cz.qase.android.formbuilderlibrary.validator.FormValidator
 open class EditTextElement(
         protected val hint: String?,
         protected val hintRes: Int?,
-        protected var text: String? = null,
+        protected val text: String? = null,
         private val valueChangeListener: ValueCallback<String>?,
         formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(formValidators) {
 
@@ -51,7 +51,6 @@ open class EditTextElement(
         editText?.setText(text)
         editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                text = s.toString()
                 positiveValidation()
                 valueChangeListener?.callback(s.toString())
             }
