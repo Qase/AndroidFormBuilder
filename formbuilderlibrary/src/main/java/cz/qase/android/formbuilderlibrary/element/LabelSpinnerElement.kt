@@ -15,9 +15,9 @@ import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import org.angmarch.views.NiceSpinner
 
 class LabelSpinnerElement<T>(private val label: String,
-                             private var value: T,
+                             private val value: T? = null,
                              private var availableValues: List<T>,
-                             private val valueCallback: ValueCallback<T>,
+                             private val valueCallback: ValueCallback<T>? = null,
                              private val groupComponent: Int = R.layout.form_group_item_inline,
                              private val labelComponent: Int = R.layout.form_inline_label,
                              private val spinnerComponent: Int = R.layout.form_inline_spinner,
@@ -42,15 +42,16 @@ class LabelSpinnerElement<T>(private val label: String,
     private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
         spinner.attachDataSource(availableValues)
-        spinner.selectedIndex = availableValues.indexOf(value)
+        if (value != null) {
+            spinner.selectedIndex = availableValues.indexOf(value)
+        }
         spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
-
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                valueCallback.callback(availableValues[position])
+                valueCallback?.callback(availableValues[position])
             }
         })
         this.spinner = spinner

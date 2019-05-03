@@ -1,13 +1,25 @@
 package cz.qase.android.formbuilderproject
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
-import cz.qase.android.formbuilderlibrary.element.*
+import cz.qase.android.formbuilderlibrary.element.ActionElement
+import cz.qase.android.formbuilderlibrary.element.ActionTextElement
+import cz.qase.android.formbuilderlibrary.element.EditTextElement
+import cz.qase.android.formbuilderlibrary.element.HeaderElement
+import cz.qase.android.formbuilderlibrary.element.LabelCheckboxElement
+import cz.qase.android.formbuilderlibrary.element.LabelDateTimeElement
+import cz.qase.android.formbuilderlibrary.element.LabelInputElement
+import cz.qase.android.formbuilderlibrary.element.LabelSpinnerElement
+import cz.qase.android.formbuilderlibrary.element.LabelSwitchElement
+import cz.qase.android.formbuilderlibrary.element.LabelTextElement
+import cz.qase.android.formbuilderlibrary.element.NavigationElement
+import cz.qase.android.formbuilderlibrary.element.OpenableHeaderTextElement
+import cz.qase.android.formbuilderlibrary.element.TextAreaElement
+import cz.qase.android.formbuilderlibrary.element.TextElement
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
