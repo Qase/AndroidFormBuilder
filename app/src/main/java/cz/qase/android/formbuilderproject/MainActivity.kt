@@ -11,6 +11,7 @@ import cz.qase.android.formbuilderlibrary.element.*
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
+import cz.qase.android.formbuilderlibrary.validator.EmailValidator
 import cz.qase.android.formbuilderlibrary.validator.MaxLengthFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotInPastValidator
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val longerStringValues = (1..5).map { randomString(25) }
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
+    private val emailValidator = EmailValidator("This is not valid email!")
     private val maxLengthValidator = MaxLengthFormValidator("This filed has more than 10 characters.", 10)
 
     private val validateActionCallback = object : ActionCallback, Form.Callback {
@@ -125,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
-        }, arrayListOf(notEmptyValidator)))
+        }, arrayListOf(emailValidator)))
         addSpace()
 
         //action elements
