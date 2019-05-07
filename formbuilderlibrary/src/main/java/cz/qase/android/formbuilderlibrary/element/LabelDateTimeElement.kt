@@ -71,8 +71,9 @@ class LabelDateTimeElement(private val label: String,
     private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val textView = inflater.inflate(textComponent, root, false) as TextView
         textView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
-        textView.text = if (value != null) {
-            sdf.format(value)
+        val tmpValue = value
+        textView.text = if (tmpValue != null) {
+            sdf.format(tmpValue.toDate())
         } else {
             hint
         }
