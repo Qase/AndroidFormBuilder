@@ -8,21 +8,24 @@ import android.widget.AdapterView
 import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
+import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
-import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
+import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
+import cz.qase.android.formbuilderlibrary.validator.FormValidator
 import org.angmarch.views.NiceSpinner
 
 class LabelSpinnerElement<T>(private val label: String,
                              private val value: T? = null,
                              private var availableValues: List<T>,
                              private val valueCallback: ValueCallback<T>? = null,
+                             formValidators: MutableList<FormValidator<T>> = ArrayList(),
                              private val groupComponent: Int = R.layout.form_group_item_inline,
                              private val labelComponent: Int = R.layout.form_inline_label,
                              private val spinnerComponent: Int = R.layout.form_inline_spinner,
                              private val formStyleBundle: FormStyleBundle? = null
-) : FormElementValid<T>() {
+) : FormElementValidatable<T>(formValidators) {
 
     var spinner: NiceSpinner? = null
 
@@ -51,6 +54,7 @@ class LabelSpinnerElement<T>(private val label: String,
             }
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                positiveValidation()
                 valueCallback?.callback(availableValues[position])
             }
         })
@@ -63,6 +67,24 @@ class LabelSpinnerElement<T>(private val label: String,
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
         return headerView
+    }
+
+    private fun positiveValidation() {
+        try {
+            super.validate()
+            spinner?.error = null
+        } catch (e: ValidationException) {
+        }
+    }
+
+    override fun validate() {
+        try {
+            super.validate()
+            spinner?.error = null
+        } catch (e: ValidationException) {
+            spinner?.error = e.message
+            throw e
+        }
     }
 
     override fun getVal(): T? {

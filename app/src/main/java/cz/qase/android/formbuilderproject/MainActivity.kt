@@ -24,8 +24,10 @@ import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.EmailValidator
+import cz.qase.android.formbuilderlibrary.validator.FormValidator
 import cz.qase.android.formbuilderlibrary.validator.MaxLengthFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
+import cz.qase.android.formbuilderlibrary.validator.NotEqualToValidator
 import cz.qase.android.formbuilderlibrary.validator.NotInPastValidator
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joda.time.DateTime
@@ -118,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         //input elements
         addElement(HeaderElement("Input elements"), true)
         addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
-        addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", stringValues, showToastStringValueCallback), true)
+        addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", arrayListOf("Select...").plus(stringValues), null, formValidators = mutableListOf<FormValidator<String>>(NotEqualToValidator("Select...", "You have to select a value!"))), true)
         addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
         addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, showToastDateTimeValueCallback, formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))))
         addSpace()
