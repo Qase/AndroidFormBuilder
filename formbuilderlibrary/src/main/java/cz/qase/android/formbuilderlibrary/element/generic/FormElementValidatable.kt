@@ -11,8 +11,10 @@ abstract class FormElementValidatable<T>(val formValidators: MutableList<FormVal
 
     @Throws(ValidationException::class)
     override fun validate() {
-        for (formValidator in formValidators) {
-            formValidator.validate(getVal())
+        if (enabled) {
+            for (formValidator in formValidators) {
+                formValidator.validate(getVal())
+            }
         }
     }
 }

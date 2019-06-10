@@ -100,6 +100,16 @@ class LabelInputElement(private val label: String,
         }
     }
 
+    public override fun enable() {
+        super.enable()
+        textInputLayout?.isEnabled = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        textInputLayout?.isEnabled = false
+    }
+
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)

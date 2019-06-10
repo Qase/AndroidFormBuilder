@@ -7,6 +7,16 @@ import cz.qase.android.formbuilderlibrary.ValidationException
 
 abstract class FormElement<T>() {
 
+    protected var enabled = true
+
+    protected open fun enable() {
+        enabled = true
+    }
+
+    protected open fun disable() {
+        enabled = false
+    }
+
     abstract fun createView(context: Context, formStyleBundle: FormStyleBundle): View
 
     @Throws(ValidationException::class)

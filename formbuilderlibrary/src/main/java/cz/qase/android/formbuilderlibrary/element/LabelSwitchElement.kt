@@ -1,6 +1,11 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,22 +16,17 @@ import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
-import android.content.res.ColorStateList
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.SwitchCompat
-import android.graphics.Color
-import android.support.v4.content.ContextCompat
-
 
 class LabelSwitchElement(private val label: String,
-                         private var checked: Boolean,
+                         private var initialValue: Boolean,
                          private val checkboxCallback: CheckboxCallback,
                          private val groupComponent: Int = R.layout.form_group_item_inline,
                          private val headerComponent: Int = R.layout.form_inline_label,
                          private val switchComponent: Int = R.layout.form_inline_switch,
                          private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>() {
+    private var switchView: SwitchCompat? = null
     override fun getVal(): Boolean {
-        return checked
+        return switchView?.isChecked == true
     }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
@@ -42,17 +42,16 @@ class LabelSwitchElement(private val label: String,
         return view
     }
 
-
     private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): SwitchCompat {
-        val switchView = inflater.inflate(switchComponent, root, false) as SwitchCompat
-        switchView.isChecked = checked
-        switchView.setColor(formStyleBundle.primaryTextColor, context)
-        switchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
-        switchView.setOnCheckedChangeListener { _, isChecked ->
-            checked = isChecked
-            checkboxCallback.callback(checked)
+        val tmpSwitchView = inflater.inflate(switchComponent, root, false) as SwitchCompat
+        tmpSwitchView.isChecked = initialValue
+        tmpSwitchView.setColor(formStyleBundle.primaryTextColor, context)
+        tmpSwitchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
+        tmpSwitchView.setOnCheckedChangeListener { _, isChecked ->
+            checkboxCallback.callback(isChecked)
         }
-        return switchView
+        switchView = tmpSwitchView
+        return tmpSwitchView
     }
 
     private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
@@ -63,7 +62,7 @@ class LabelSwitchElement(private val label: String,
     }
 
 
-    private fun SwitchCompat.setColor(colorRes: Int, context: Context){
+    private fun SwitchCompat.setColor(colorRes: Int, context: Context) {
         // trackColor is the thumbColor with 30% transparency (77)
 
         val color = ContextCompat.getColor(context, colorRes)
@@ -80,5 +79,15 @@ class LabelSwitchElement(private val label: String,
                 arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
                 intArrayOf(trackColor, Color.parseColor("#4D000000") // full black with 30% transparency (4D)
                 )))
+    }
+
+    public override fun enable() {
+        super.enable()
+        switchView?.isEnabled = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        switchView?.isEnabled = false
     }
 }

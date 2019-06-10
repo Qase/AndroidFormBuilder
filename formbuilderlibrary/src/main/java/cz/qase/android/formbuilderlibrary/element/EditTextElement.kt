@@ -69,6 +69,15 @@ open class EditTextElement(
         }
     }
 
+    public override fun enable() {
+        super.disable()
+        editText?.isEnabled = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        editText?.isEnabled = false
+    }
     override fun getVal(): String? = editText?.text.toString()
 
 }

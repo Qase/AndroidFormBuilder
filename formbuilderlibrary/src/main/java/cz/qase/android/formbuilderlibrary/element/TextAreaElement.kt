@@ -125,4 +125,14 @@ class TextAreaElement(
             throw e
         }
     }
+
+    public override fun enable() {
+        super.disable()
+        textInputEditText?.isEnabled = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        textInputEditText?.isEnabled = false
+    }
 }

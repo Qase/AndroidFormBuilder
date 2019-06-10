@@ -87,6 +87,20 @@ class LabelSpinnerElement<T>(private val label: String,
         }
     }
 
+    public override fun enable() {
+        super.enable()
+        spinner?.isEnabled = true
+        spinner?.isClickable = true
+        spinner?.isFocusable = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        spinner?.isEnabled = false
+        spinner?.isClickable = false
+        spinner?.isFocusable = false
+    }
+
     override fun getVal(): T? {
         return spinner?.selectedIndex?.let { availableValues.get(it) }
     }

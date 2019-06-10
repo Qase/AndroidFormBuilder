@@ -39,6 +39,7 @@ class LabelDateTimeElement(private val label: String,
 
     private var textView: TextView? = null
     private var labelView: TextView? = null
+    private var viewGroup: ViewGroup? = null
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
@@ -65,6 +66,7 @@ class LabelDateTimeElement(private val label: String,
             }
             true
         }
+        viewGroup = view
         return view
     }
 
@@ -139,6 +141,18 @@ class LabelDateTimeElement(private val label: String,
             textView?.error = e.message
             throw e
         }
+    }
+
+    public override fun enable() {
+        super.enable()
+        viewGroup?.isEnabled = true
+        textView?.isEnabled = true
+    }
+
+    public override fun disable() {
+        super.disable()
+        viewGroup?.isEnabled = false
+        textView?.isEnabled = false
     }
 
     private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {

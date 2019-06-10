@@ -2,7 +2,6 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.CompoundButtonCompat
 import android.view.LayoutInflater
@@ -27,10 +26,10 @@ class LabelCheckboxElement(
         private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<Boolean>() {
 
-    private lateinit var checkbox: CheckBox
+    private var checkbox: CheckBox? = null
 
     override fun getVal(): Boolean? {
-        return checkbox.isChecked
+        return checkbox?.isChecked
     }
 
 
@@ -53,7 +52,7 @@ class LabelCheckboxElement(
     }
 
     private fun prepareCheckbox(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): CheckBox {
-        checkbox = inflater.inflate(checkboxComponent, root, false) as CheckBox
+        val checkbox = inflater.inflate(checkboxComponent, root, false) as CheckBox
 
 
         val color = ContextCompat.getColor(context,formStyleBundle.primaryBackgroundColor)
@@ -63,9 +62,17 @@ class LabelCheckboxElement(
         checkbox.setOnClickListener {
             checkboxCallback.callback(checkbox.isChecked)
         }
+        this.checkbox = checkbox
         return checkbox
     }
 
+    public override fun enable() {
+        super.disable()
+        checkbox?.isEnabled = true
+    }
 
-
+    public override fun disable() {
+        super.disable()
+        checkbox?.isEnabled = false
+    }
 }
