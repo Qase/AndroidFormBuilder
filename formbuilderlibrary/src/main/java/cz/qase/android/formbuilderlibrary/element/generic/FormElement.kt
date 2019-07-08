@@ -23,5 +23,7 @@ abstract class FormElement<T>() {
     abstract fun validate()
 
     abstract fun getVal(): T?
+    abstract fun hide()
+    abstract fun show()
 
 }

@@ -12,13 +12,22 @@ import kotlinx.android.synthetic.main.form_text_item.view.*
 
 
 class TextElement(val value: String, val component: Int = R.layout.form_text_item) : FormElementNoValue() {
+    private var view: View? = null
 
+    override fun hide() {
+        view?.visibility = View.GONE
+    }
+
+    override fun show() {
+        view?.visibility = View.VISIBLE
+    }
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(component, null)
-        view.textValue.text = value
-        view.textValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        view.textValue.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
-        return view
+        val viewTmp = inflater.inflate(component, null)
+        viewTmp.textValue.text = value
+        viewTmp.textValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        viewTmp.textValue.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        view = viewTmp
+        return viewTmp
     }
 }

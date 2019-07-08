@@ -28,6 +28,15 @@ class LabelSpinnerElement<T>(private val label: String,
 ) : FormElementValidatable<T>(formValidators) {
 
     var spinner: NiceSpinner? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -39,6 +48,7 @@ class LabelSpinnerElement<T>(private val label: String,
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(spinnerView)
+        viewGroup = view
         return view
     }
 

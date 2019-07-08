@@ -35,6 +35,15 @@ class LabelInputElement(private val label: String,
     private var labelView: TextView? = null
     private var textInputEditText: TextInputEditText? = null
     private var textInputLayout: TextInputLayout? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -46,6 +55,7 @@ class LabelInputElement(private val label: String,
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(inputView)
+        viewGroup = view
         return view
     }
 

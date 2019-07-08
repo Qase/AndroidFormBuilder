@@ -24,7 +24,18 @@ class LabelSwitchElement(private val label: String,
                          private val headerComponent: Int = R.layout.form_inline_label,
                          private val switchComponent: Int = R.layout.form_inline_switch,
                          private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>() {
+
     private var switchView: SwitchCompat? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
+
     override fun getVal(): Boolean {
         return switchView?.isChecked == true
     }
@@ -39,6 +50,7 @@ class LabelSwitchElement(private val label: String,
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(textView)
+        viewGroup = view
         return view
     }
 

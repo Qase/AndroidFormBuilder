@@ -39,6 +39,15 @@ class TextAreaElement(
     private var footerView: TextView? = null
     private var textInputEditText: TextInputEditText? = null
     private var textInputLayout: TextInputLayout? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -50,6 +59,7 @@ class TextAreaElement(
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(inputView)
         view.addView(footerView)
+        viewGroup = view
         return view
     }
 

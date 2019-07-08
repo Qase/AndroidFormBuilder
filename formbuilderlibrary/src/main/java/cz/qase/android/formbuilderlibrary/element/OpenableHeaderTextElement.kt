@@ -2,7 +2,11 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -29,6 +33,15 @@ class OpenableHeaderTextElement(private val label: String,
     private lateinit var headerGroup: ViewGroup
     private lateinit var symbolWrapper: LinearLayout
     private lateinit var symbolView: ImageView
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
 
 
     private val headerTouchAction = View.OnTouchListener { _, event ->
@@ -75,6 +88,7 @@ class OpenableHeaderTextElement(private val label: String,
 
         view.addView(headerGroup)
         view.addView(textViewWrapper)
+        viewGroup = view
         return view
     }
 
@@ -94,7 +108,7 @@ class OpenableHeaderTextElement(private val label: String,
         textWrapper.gravity = Gravity.END
         textWrapper.visibility = View.GONE
 
-        for (text in values){
+        for (text in values) {
             val textView = prepareText(inflater, textWrapper, text)
             textWrapper.addView(textView)
         }
