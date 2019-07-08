@@ -10,10 +10,21 @@ import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
 class Divider(private val dividerComponent: Int = R.layout.form_divider) : FormElementNoValue() {
 
+    private var view: View? = null
+
+    override fun hide() {
+        view?.visibility = View.GONE
+    }
+
+    override fun show() {
+        view?.visibility = View.VISIBLE
+    }
+
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(dividerComponent, null)
-        view.setBackgroundColorResourceId(context, formStyleBundle.dividerColor)
-        return view
+        val viewTmp = inflater.inflate(dividerComponent, null)
+        viewTmp.setBackgroundColorResourceId(context, formStyleBundle.dividerColor)
+        view = viewTmp
+        return viewTmp
     }
 }

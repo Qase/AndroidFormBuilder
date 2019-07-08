@@ -13,12 +13,23 @@ import kotlinx.android.synthetic.main.form_header_item.view.*
 
 class HeaderElement(val value: String, val component: Int = R.layout.form_header_item) : FormElementNoValue() {
 
+    private var view: View? = null
+
+    override fun hide() {
+        view?.visibility = View.GONE
+    }
+
+    override fun show() {
+        view?.visibility = View.VISIBLE
+    }
+
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(component, null)
-        view.headerValue.text = value
-        view.headerValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        view.headerValue.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
-        return view
+        val viewTmp = inflater.inflate(component, null)
+        viewTmp.headerValue.text = value
+        viewTmp.headerValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        viewTmp.headerValue.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
+        view = viewTmp
+        return viewTmp
     }
 }

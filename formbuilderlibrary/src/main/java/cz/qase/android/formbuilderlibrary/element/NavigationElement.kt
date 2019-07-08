@@ -22,6 +22,16 @@ open class NavigationElement(private val actionCallback: ActionCallback,
                              private val symbolComponent: Int = R.layout.form_navigation_symbol,
                              private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
+
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
@@ -52,6 +62,7 @@ open class NavigationElement(private val actionCallback: ActionCallback,
             }
             true
         }
+        viewGroup = view
         return view
     }
 

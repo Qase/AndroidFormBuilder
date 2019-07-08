@@ -3,48 +3,60 @@ package cz.qase.android.formbuilderlibrary
 import android.content.Context
 import android.view.ViewGroup
 import cz.qase.android.formbuilderlibrary.element.generic.FormElement
-import kotlin.math.max
 
 class Form(val context: Context,
            val viewGroup: ViewGroup,
-           elements: MutableList<FormElement<*>>,
+           private val elementsMap: LinkedHashMap<String, List<FormElement<*>>>,
            val formStyleBundle: FormStyleBundle) {
-
-    val elements: MutableList<FormElement<*>> = arrayListOf()
-
-    init {
-        for (element in elements) {
-            this.elements.add(element)
-        }
-    }
 
     @Throws(ValidationException::class)
     fun validate() {
         var validationException: ValidationException? = null
-        for (formElement in elements) {
-            try {
-                formElement.validate()
-            } catch (e: ValidationException) {
-                validationException = e
+        for (mutableEntry in elementsMap) {
+            for (formElement in mutableEntry.value) {
+                try {
+                    formElement.validate()
+                } catch (e: ValidationException) {
+                    validationException = e
+                }
             }
         }
-        if(validationException!=null){
+
+        if (validationException != null) {
             throw validationException
         }
     }
 
     fun draw() {
         //draw everything first and then add height
-        for (element in elements) {
-            val view = element.createView(context, formStyleBundle)
-            viewGroup.addView(view)
+        for (mutableEntry in elementsMap) {
+            for (element in mutableEntry.value) {
+                val view = element.createView(context, formStyleBundle)
+                viewGroup.addView(view)
+            }
         }
     }
 
     fun reDraw() {
         viewGroup.removeAllViews()
-        for (element in elements) {
-            viewGroup.addView(element.createView(context, formStyleBundle))
+        draw()
+    }
+
+    fun hide(id: String) {
+        val list = elementsMap[id]
+        if (list != null) {
+            for (formElement in list) {
+                formElement.hide()
+            }
+        }
+    }
+
+    fun show(id: String) {
+        val list = elementsMap[id]
+        if (list != null) {
+            for (formElement in list) {
+                formElement.show()
+            }
         }
     }
 

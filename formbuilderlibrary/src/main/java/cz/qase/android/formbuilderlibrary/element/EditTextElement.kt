@@ -25,6 +25,14 @@ open class EditTextElement(
     var editText: TextInputEditText? = null
     var textInputLayout: TextInputLayout? = null
 
+    override fun hide() {
+        textInputLayout?.visibility = View.GONE
+    }
+
+    override fun show() {
+        textInputLayout?.visibility = View.VISIBLE
+    }
+
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true

@@ -1,7 +1,6 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,16 @@ open class LabelTextElement(private val label: String,
 
     private var textView: TextView? = null
     private var labelView: TextView? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
+
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
@@ -30,6 +39,7 @@ open class LabelTextElement(private val label: String,
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(textView)
+        viewGroup = view
         return view
     }
 

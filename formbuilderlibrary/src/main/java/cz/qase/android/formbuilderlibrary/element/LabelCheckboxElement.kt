@@ -27,6 +27,15 @@ class LabelCheckboxElement(
 ) : FormElementValid<Boolean>() {
 
     private var checkbox: CheckBox? = null
+    private var viewGroup: ViewGroup? = null
+
+    override fun hide() {
+        viewGroup?.visibility = View.GONE
+    }
+
+    override fun show() {
+        viewGroup?.visibility = View.VISIBLE
+    }
 
     override fun getVal(): Boolean? {
         return checkbox?.isChecked
@@ -36,11 +45,14 @@ class LabelCheckboxElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val labelView = prepareLabel(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
-        val checkboxView = prepareCheckbox(inflater, context, this.formStyleBundle ?: formStyleBundle, view)
+        val labelView = prepareLabel(inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view)
+        val checkboxView = prepareCheckbox(inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view)
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(labelView)
         view.addView(checkboxView)
+        viewGroup = view
         return view
     }
 
@@ -55,7 +67,7 @@ class LabelCheckboxElement(
         val checkbox = inflater.inflate(checkboxComponent, root, false) as CheckBox
 
 
-        val color = ContextCompat.getColor(context,formStyleBundle.primaryBackgroundColor)
+        val color = ContextCompat.getColor(context, formStyleBundle.primaryBackgroundColor)
         CompoundButtonCompat.setButtonTintList(checkbox, ColorStateList.valueOf(color))
         checkbox.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         checkbox.isChecked = checked
