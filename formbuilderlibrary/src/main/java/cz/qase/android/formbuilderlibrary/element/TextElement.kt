@@ -25,7 +25,7 @@ class TextElement(val value: String, val component: Int = R.layout.form_text_ite
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val viewTmp = inflater.inflate(component, null)
         viewTmp.textValue.text = value
-        viewTmp.textValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
+        viewTmp.textValue.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         viewTmp.textValue.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view = viewTmp
         return viewTmp
