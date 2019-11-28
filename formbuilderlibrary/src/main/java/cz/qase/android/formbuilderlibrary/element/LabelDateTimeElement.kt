@@ -1,12 +1,12 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.ValidationException

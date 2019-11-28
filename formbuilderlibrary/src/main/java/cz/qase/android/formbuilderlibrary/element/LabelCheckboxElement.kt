@@ -2,13 +2,13 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.CompoundButtonCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.CompoundButtonCompat
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId

@@ -1,11 +1,11 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.support.design.widget.TextInputEditText
-import android.support.design.widget.TextInputLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId

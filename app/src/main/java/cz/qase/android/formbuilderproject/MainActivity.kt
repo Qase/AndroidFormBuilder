@@ -1,8 +1,8 @@
 package cz.qase.android.formbuilderproject
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle

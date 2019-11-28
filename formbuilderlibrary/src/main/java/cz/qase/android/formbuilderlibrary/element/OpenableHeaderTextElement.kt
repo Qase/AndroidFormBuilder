@@ -1,7 +1,6 @@
 package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
