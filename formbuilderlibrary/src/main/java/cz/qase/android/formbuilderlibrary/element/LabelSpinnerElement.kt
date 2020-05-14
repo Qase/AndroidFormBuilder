@@ -97,6 +97,11 @@ class LabelSpinnerElement<T>(private val label: String,
         }
     }
 
+    fun updateOptions(availableValues: List<T>) {
+        spinner?.attachDataSource(availableValues)
+    }
+
+
     public override fun enable() {
         super.enable()
         spinner?.isEnabled = true
