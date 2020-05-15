@@ -52,7 +52,7 @@ open class LabelTextElement(private val label: String,
     }
 
     fun updateLabel(label: String) {
-        textView?.text = label
+        labelView?.text = label
     }
 
     fun updateText(text: String) {
