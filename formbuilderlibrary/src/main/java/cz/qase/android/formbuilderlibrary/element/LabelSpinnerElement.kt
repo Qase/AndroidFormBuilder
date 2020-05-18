@@ -98,6 +98,7 @@ class LabelSpinnerElement<T>(private val label: String,
     }
 
     fun updateOptions(availableValues: List<T>) {
+        this.availableValues = availableValues
         spinner?.attachDataSource(availableValues)
     }
 
