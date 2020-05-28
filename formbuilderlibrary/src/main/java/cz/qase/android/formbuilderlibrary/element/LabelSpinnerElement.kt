@@ -16,15 +16,16 @@ import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 import org.angmarch.views.NiceSpinner
 
-class LabelSpinnerElement<T>(private val label: String,
-                             private val value: T? = null,
-                             private var availableValues: List<T>,
-                             private val valueCallback: ValueCallback<T>? = null,
-                             formValidators: MutableList<FormValidator<T>> = ArrayList(),
-                             private val groupComponent: Int = R.layout.form_group_item_inline,
-                             private val labelComponent: Int = R.layout.form_inline_label,
-                             private val spinnerComponent: Int = R.layout.form_inline_spinner,
-                             private val formStyleBundle: FormStyleBundle? = null
+class LabelSpinnerElement<T>(
+    private val label: String,
+    private val value: T? = null,
+    private var availableValues: List<T>,
+    private val valueCallback: ValueCallback<T>? = null,
+    formValidators: MutableList<FormValidator<T>> = ArrayList(),
+    private val groupComponent: Int = R.layout.form_group_item_inline,
+    private val labelComponent: Int = R.layout.form_inline_label,
+    private val spinnerComponent: Int = R.layout.form_inline_spinner,
+    private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<T>(formValidators) {
 
     var spinner: NiceSpinner? = null
@@ -41,10 +42,14 @@ class LabelSpinnerElement<T>(private val label: String,
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareLabel(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
-        val spinnerView = prepareSpinner(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
+        val headerView = prepareLabel(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view
+        )
+        val spinnerView = prepareSpinner(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view
+        )
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
         view.addView(spinnerView)
@@ -52,7 +57,12 @@ class LabelSpinnerElement<T>(private val label: String,
         return view
     }
 
-    private fun prepareSpinner(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): NiceSpinner {
+    private fun prepareSpinner(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): NiceSpinner {
         val spinner = inflater.inflate(spinnerComponent, root, false) as NiceSpinner
         spinner.attachDataSource(availableValues)
         if (value != null) {
@@ -63,7 +73,12 @@ class LabelSpinnerElement<T>(private val label: String,
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 positiveValidation()
                 valueCallback?.callback(availableValues[position])
             }
@@ -72,7 +87,12 @@ class LabelSpinnerElement<T>(private val label: String,
         return spinner
     }
 
-    private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
+    private fun prepareLabel(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): TextView {
         val headerView = inflater.inflate(labelComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
@@ -118,6 +138,11 @@ class LabelSpinnerElement<T>(private val label: String,
     }
 
     override fun getVal(): T? {
-        return spinner?.selectedIndex?.let { availableValues.get(it) }
+        return spinner?.selectedIndex?.let {
+            if (it >= availableValues.size) {
+                return null
+            }
+            availableValues.get(it)
+        }
     }
 }
