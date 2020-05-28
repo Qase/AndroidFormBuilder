@@ -138,7 +138,22 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
         }, arrayListOf(emailValidator)), true)
-        addElement(TextAreaElement("Fill textarea", null, showToastStringValueCallback, maxLength = 320))
+        addElement(
+            TextAreaElement(
+                "MMMMMMMMMMMMMMMMMMMM",
+                null,
+                showToastStringValueCallback,
+                maxLength = 320
+            )
+        )
+        addElement(
+            TextAreaElement(
+                "Fill textarea with extra long hint, becouse it sucks to be bald, whatever man, do what you want",
+                null,
+                showToastStringValueCallback,
+                maxLength = 320
+            )
+        )
         addSpace()
 
         //action elements
