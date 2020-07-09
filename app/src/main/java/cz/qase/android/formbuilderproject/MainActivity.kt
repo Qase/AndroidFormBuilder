@@ -17,6 +17,7 @@ import cz.qase.android.formbuilderlibrary.element.LabelSpinnerElement
 import cz.qase.android.formbuilderlibrary.element.LabelSwitchElement
 import cz.qase.android.formbuilderlibrary.element.LabelTextElement
 import cz.qase.android.formbuilderlibrary.element.NavigationElement
+import cz.qase.android.formbuilderlibrary.element.NavigationWithErrorElement
 import cz.qase.android.formbuilderlibrary.element.OpenableHeaderTextElement
 import cz.qase.android.formbuilderlibrary.element.TextAreaElement
 import cz.qase.android.formbuilderlibrary.element.TextElement
@@ -161,6 +162,12 @@ class MainActivity : AppCompatActivity() {
         addElement(ActionElement(showToastActionCallback, "ActionElement label"), true)
         addElement(ActionTextElement(showToastActionCallback, "Action", "Click me"), true)
         addElement(NavigationElement(showToastActionCallback, "NavigationElement label"), true)
+        addElement(
+            NavigationWithErrorElement(
+                showToastActionCallback,
+                "NavigationWithErrorElement label"
+            ), true
+        )
         addElement(ActionElement(validateActionCallback, "Validate all elements"))
         addSpace()
 
