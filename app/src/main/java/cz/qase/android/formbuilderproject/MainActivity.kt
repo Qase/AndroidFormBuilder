@@ -41,12 +41,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var form: Form
 
     private val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
-    private val stringValues = arrayOf("one", "two", "three", "four", "five").map { "Option $it" }.toList()
+    private val stringValues = arrayOf(
+        "one",
+        "two",
+        "three",
+        "four",
+        "really long long long long long five"
+    ).map { "Option $it" }.toList()
     private val longerStringValues = (1..5).map { randomString(25) }
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
     private val emailValidator = EmailValidator("This is not valid email!")
-    private val maxLengthValidator = MaxLengthFormValidator("This filed has more than 10 characters.", 10)
+    private val maxLengthValidator =
+        MaxLengthFormValidator("This filed has more than 10 characters.", 10)
 
     private val validateActionCallback = object : ActionCallback, Form.Callback {
         override fun successCallback() {
@@ -115,15 +122,57 @@ class MainActivity : AppCompatActivity() {
         addElement(HeaderElement("Static elements"), true)
         addElement(TextElement("TextElement value"), true)
         addElement(LabelTextElement("LabelTextElement label", "LabelTextElement text"), true)
+        addElement(
+            LabelTextElement(
+                "LabelTextElement label with very long text which needs to overflow",
+                "LabelTextElement text with very long text which needs to overflow"
+            ), true
+        )
+        addElement(
+            LabelTextElement(
+                "Label",
+                "LabelTextElement text with very long text which needs to overflow"
+            ), true
+        )
         addElement(OpenableHeaderTextElement("OpenableHeaderTextElement label", longerStringValues))
         addSpace()
 
         //input elements
         addElement(HeaderElement("Input elements"), true)
-        addElement(LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback), true)
-        addElement(LabelSpinnerElement("LabelSpinnerElement label", "Option one", arrayListOf("Select...").plus(stringValues), null, formValidators = mutableListOf<FormValidator<String>>(NotEqualToValidator("Select...", "You have to select a value!"))), true)
-        addElement(LabelCheckboxElement("LabelCheckboxElement label", true, showToastCheckboxCallback), true)
-        addElement(LabelDateTimeElement("Date picker", "Vyberte datum...", supportFragmentManager, showToastDateTimeValueCallback, formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))))
+        addElement(
+            LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback),
+            true
+        )
+        addElement(
+            LabelSpinnerElement(
+                "LabelSpinnerElement label",
+                "Option one",
+                arrayListOf("Select...").plus(stringValues),
+                null,
+                formValidators = mutableListOf<FormValidator<String>>(
+                    NotEqualToValidator(
+                        "Select...",
+                        "You have to select a value!"
+                    )
+                )
+            ), true
+        )
+        addElement(
+            LabelCheckboxElement(
+                "LabelCheckboxElement label",
+                true,
+                showToastCheckboxCallback
+            ), true
+        )
+        addElement(
+            LabelDateTimeElement(
+                "Date picker",
+                "Vyberte datum...",
+                supportFragmentManager,
+                showToastDateTimeValueCallback,
+                formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))
+            )
+        )
         addSpace()
 
 

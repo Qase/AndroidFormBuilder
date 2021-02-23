@@ -17,13 +17,16 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
-class LabelSwitchElement(private val label: String,
-                         private var initialValue: Boolean,
-                         private val checkboxCallback: CheckboxCallback,
-                         private val groupComponent: Int = R.layout.form_group_item_inline,
-                         private val headerComponent: Int = R.layout.form_inline_label,
-                         private val switchComponent: Int = R.layout.form_inline_switch,
-                         private val formStyleBundle: FormStyleBundle? = null) : FormElementValid<Boolean>() {
+class LabelSwitchElement(
+    private val label: String,
+    private var initialValue: Boolean,
+    private val checkboxCallback: CheckboxCallback,
+    private val groupComponent: Int = R.layout.form_group_item_inline,
+    private val headerComponent: Int = R.layout.form_inline_label,
+    private val switchComponent: Int = R.layout.form_inline_switch,
+    private val groupComponentEnd: Int = R.layout.form_group_item_inline_end,
+    private val formStyleBundle: FormStyleBundle? = null
+) : FormElementValid<Boolean>() {
 
     private var switchView: SwitchCompat? = null
     private var viewGroup: ViewGroup? = null
@@ -43,13 +46,19 @@ class LabelSwitchElement(private val label: String,
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareHeader(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
-        val textView = prepareSwitch(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
+        val groupEnd = inflater.inflate(groupComponentEnd, view, false) as ViewGroup
+        val headerView = prepareHeader(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view
+        )
+        val textView = prepareSwitch(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, groupEnd
+        )
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
-        view.addView(textView)
+        groupEnd.addView(textView)
+        view.addView(groupEnd)
         viewGroup = view
         return view
     }

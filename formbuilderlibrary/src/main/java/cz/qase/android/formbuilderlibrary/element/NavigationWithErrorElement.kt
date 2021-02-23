@@ -22,6 +22,7 @@ open class NavigationWithErrorElement(
     private val headerComponent: Int = R.layout.form_inline_label,
     private val warningSymbolComponent: Int = R.layout.form_error_symbol,
     private val symbolComponent: Int = R.layout.form_navigation_symbol,
+    private val groupComponentEnd: Int = R.layout.form_group_item_inline_end,
     private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementNoValue() {
 
@@ -38,19 +39,21 @@ open class NavigationWithErrorElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
+        val viewEnd = inflater.inflate(groupComponentEnd, view, false) as ViewGroup
         val headerView = prepareLabel(
             inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view
         )
-        val errorView = inflater.inflate(warningSymbolComponent, view, false) as ImageView
+        val errorView = inflater.inflate(warningSymbolComponent, viewEnd, false) as ImageView
         val symbolView = prepareSymbol(
             inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view
+                ?: formStyleBundle, viewEnd
         )
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
-        view.addView(errorView)
-        view.addView(symbolView)
+        viewEnd.addView(errorView)
+        viewEnd.addView(symbolView)
+        view.addView(viewEnd)
 
         view.isClickable = true
         view.setOnClickListener {

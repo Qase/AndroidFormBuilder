@@ -15,12 +15,15 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 
-open class NavigationElement(private val actionCallback: ActionCallback,
-                             private val label: String,
-                             private val groupComponent: Int = R.layout.form_group_item_inline,
-                             private val headerComponent: Int = R.layout.form_inline_label,
-                             private val symbolComponent: Int = R.layout.form_navigation_symbol,
-                             private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
+open class NavigationElement(
+    private val actionCallback: ActionCallback,
+    private val label: String,
+    private val groupComponent: Int = R.layout.form_group_item_inline,
+    private val headerComponent: Int = R.layout.form_inline_label,
+    private val symbolComponent: Int = R.layout.form_navigation_symbol,
+    private val groupComponentEnd: Int = R.layout.form_group_item_inline_end,
+    private val formStyleBundle: FormStyleBundle? = null
+) : FormElementNoValue() {
 
     private var viewGroup: ViewGroup? = null
 
@@ -35,14 +38,19 @@ open class NavigationElement(private val actionCallback: ActionCallback,
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
-        val headerView = prepareLabel(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
-        val symbolView = prepareSymbol(inflater, context, this.formStyleBundle
-                ?: formStyleBundle, view)
+        val groupEnd = inflater.inflate(groupComponentEnd, view, false) as ViewGroup
+        val headerView = prepareLabel(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, view
+        )
+        val symbolView = prepareSymbol(
+            inflater, context, this.formStyleBundle
+                ?: formStyleBundle, groupEnd
+        )
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
-        view.addView(symbolView)
-
+        groupEnd.addView(symbolView)
+        view.addView(groupEnd)
         view.isClickable = true
         view.setOnClickListener {
             actionCallback.callback()
@@ -50,11 +58,17 @@ open class NavigationElement(private val actionCallback: ActionCallback,
         view.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+                    view.setBackgroundColorResourceId(
+                        context,
+                        formStyleBundle.secondaryBackgroundColor
+                    )
                     view.performClick()
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+                    view.setBackgroundColorResourceId(
+                        context,
+                        formStyleBundle.secondaryBackgroundColor
+                    )
                 }
                 MotionEvent.ACTION_DOWN -> {
                     view.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
