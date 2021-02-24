@@ -144,6 +144,15 @@ class MainActivity : AppCompatActivity() {
             true
         )
         addElement(
+            LabelSwitchElement(
+                "LabelSwitchNoteElement label",
+                true,
+                showToastCheckboxCallback,
+                noteCallback = showToastActionCallback
+            ),
+            true
+        )
+        addElement(
             LabelSpinnerElement(
                 "LabelSpinnerElement label",
                 "Option one",

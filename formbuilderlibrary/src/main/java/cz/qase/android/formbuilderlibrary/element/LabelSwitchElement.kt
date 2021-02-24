@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
+import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 
@@ -23,8 +26,10 @@ class LabelSwitchElement(
     private val checkboxCallback: CheckboxCallback,
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val headerComponent: Int = R.layout.form_inline_label,
+    private val noteSymbolComponent: Int = R.layout.form_note_symbol,
     private val switchComponent: Int = R.layout.form_inline_switch,
     private val groupComponentEnd: Int = R.layout.form_group_item_inline_end,
+    private val noteCallback: ActionCallback? = null,
     private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValid<Boolean>() {
 
@@ -51,19 +56,50 @@ class LabelSwitchElement(
             inflater, context, this.formStyleBundle
                 ?: formStyleBundle, view
         )
-        val textView = prepareSwitch(
+        val switchView = prepareSwitch(
             inflater, context, this.formStyleBundle
                 ?: formStyleBundle, groupEnd
         )
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         view.addView(headerView)
-        groupEnd.addView(textView)
+        noteCallback?.let { actionCallback ->
+            val noteView = inflater.inflate(noteSymbolComponent, groupEnd, false) as ImageView
+            groupEnd.addView(noteView)
+            val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
+            noteView.setColorFilter(color)
+            noteView.setOnClickListener { actionCallback.callback() }
+            noteView.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
+                        noteView.setColorFilter(color)
+                        noteView.performClick()
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
+                        noteView.setColorFilter(color)
+                    }
+                    MotionEvent.ACTION_DOWN -> {
+                        val color =
+                            ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
+                        noteView.setColorFilter(color)
+                    }
+                }
+                true
+            }
+        }
+        groupEnd.addView(switchView)
         view.addView(groupEnd)
         viewGroup = view
         return view
     }
 
-    private fun prepareSwitch(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): SwitchCompat {
+    private fun prepareSwitch(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): SwitchCompat {
         val tmpSwitchView = inflater.inflate(switchComponent, root, false) as SwitchCompat
         tmpSwitchView.isChecked = initialValue
         tmpSwitchView.setColor(formStyleBundle.primaryTextColor, context)
@@ -75,7 +111,12 @@ class LabelSwitchElement(
         return tmpSwitchView
     }
 
-    private fun prepareHeader(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
+    private fun prepareHeader(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
@@ -85,21 +126,27 @@ class LabelSwitchElement(
 
     private fun SwitchCompat.setColor(colorRes: Int, context: Context) {
         // trackColor is the thumbColor with 30% transparency (77)
-
         val color = ContextCompat.getColor(context, colorRes)
-
         val trackColor = Color.argb(77, Color.red(color), Color.green(color), Color.blue(color))
 
         // setting the thumb color
-        DrawableCompat.setTintList(thumbDrawable, ColorStateList(
+        DrawableCompat.setTintList(
+            thumbDrawable, ColorStateList(
                 arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(color, Color.WHITE)))
+                intArrayOf(color, Color.WHITE)
+            )
+        )
 
         // setting the track color
-        DrawableCompat.setTintList(trackDrawable, ColorStateList(
+        DrawableCompat.setTintList(
+            trackDrawable, ColorStateList(
                 arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(trackColor, Color.parseColor("#4D000000") // full black with 30% transparency (4D)
-                )))
+                intArrayOf(
+                    trackColor,
+                    Color.parseColor("#4D000000") // full black with 30% transparency (4D)
+                )
+            )
+        )
     }
 
     public override fun enable() {
