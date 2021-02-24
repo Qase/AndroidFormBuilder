@@ -45,6 +45,8 @@ open class NavigationWithErrorElement(
                 ?: formStyleBundle, view
         )
         val errorView = inflater.inflate(warningSymbolComponent, viewEnd, false) as ImageView
+        val dangerousColor = ContextCompat.getColor(context, formStyleBundle.dangerousSymbolColor)
+        errorView.setColorFilter(dangerousColor)
         val symbolView = prepareSymbol(
             inflater, context, this.formStyleBundle
                 ?: formStyleBundle, viewEnd

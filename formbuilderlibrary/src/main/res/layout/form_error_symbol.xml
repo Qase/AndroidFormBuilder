@@ -3,7 +3,6 @@
     android:id="@+id/errorSymbol"
     android:layout_width="30dp"
     android:layout_height="30dp"
-    android:tint="@color/colorRed"
     android:contentDescription="@string/navigation"
     android:src="@drawable/ic_error"
  />

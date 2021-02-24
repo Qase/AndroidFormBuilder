@@ -65,24 +65,22 @@ class LabelSwitchElement(
         noteCallback?.let { actionCallback ->
             val noteView = inflater.inflate(noteSymbolComponent, groupEnd, false) as ImageView
             groupEnd.addView(noteView)
-            val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
-            noteView.setColorFilter(color)
+            val neutralColor = ContextCompat.getColor(context, formStyleBundle.neutralSymbolColor)
+            val primaryColor = ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
+            noteView.setColorFilter(neutralColor)
             noteView.setOnClickListener { actionCallback.callback() }
             noteView.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                        val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
-                        noteView.setColorFilter(color)
+                        noteView.setColorFilter(neutralColor)
                         noteView.performClick()
                     }
                     MotionEvent.ACTION_CANCEL -> {
-                        val color = ContextCompat.getColor(context, formStyleBundle.dividerColor)
-                        noteView.setColorFilter(color)
+                        noteView.setColorFilter(neutralColor)
                     }
                     MotionEvent.ACTION_DOWN -> {
-                        val color =
-                            ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
-                        noteView.setColorFilter(color)
+
+                        noteView.setColorFilter(primaryColor)
                     }
                 }
                 true
