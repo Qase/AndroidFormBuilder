@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import com.google.android.material.textfield.TextInputEditText
@@ -14,12 +15,14 @@ import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
 
-open class EditTextElement(
-        protected val hint: String?,
-        protected val text: String? = null,
-        private val valueChangeListener: ValueCallback<String>? = null,
-        formValidators: MutableList<FormValidator<String>> = ArrayList()) : FormElementValidatable<String>(formValidators) {
 
+open class EditTextElement(
+    protected val hint: String?,
+    protected val text: String? = null,
+    private val valueChangeListener: ValueCallback<String>? = null,
+    protected val password: Boolean = false,
+    formValidators: MutableList<FormValidator<String>> = ArrayList()
+) : FormElementValidatable<String>(formValidators) {
 
 
     var editText: TextInputEditText? = null
@@ -36,10 +39,17 @@ open class EditTextElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
-        textInputLayout?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        textInputLayout?.setBackgroundColorResourceId(
+            context,
+            formStyleBundle.secondaryBackgroundColor
+        )
         textInputLayout?.setPadding(10, 0, 10, 0)
         editText = TextInputEditText(context)
         editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
+        if (password) {
+            editText?.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
         textInputLayout?.addView(editText)
         textInputLayout?.hint = hint
         editText?.setText(text)
@@ -86,6 +96,7 @@ open class EditTextElement(
         super.disable()
         editText?.isEnabled = false
     }
+
     override fun getVal(): String? = editText?.text.toString()
 
 }

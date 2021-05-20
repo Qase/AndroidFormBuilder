@@ -96,7 +96,11 @@ class MainActivity : AppCompatActivity() {
         private var toast: Toast? = null
         override fun callback(value: DateTime) {
             toast?.cancel()
-            toast = Toast.makeText(this@MainActivity, SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()), Toast.LENGTH_SHORT)
+            toast = Toast.makeText(
+                this@MainActivity,
+                SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()),
+                Toast.LENGTH_SHORT
+            )
             toast?.show()
         }
     }
@@ -187,11 +191,25 @@ class MainActivity : AppCompatActivity() {
 
         //input validable elements
         addElement(HeaderElement("Input validable elements"), true)
-        addElement(EditTextElement("Hint", "Edit text element text", object : ValueCallback<String> {
+        addElement(
+            EditTextElement(
+                "Hint",
+                "Edit text element text",
+                object : ValueCallback<String> {
+                    override fun callback(value: String) {
+                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                false,
+                arrayListOf(maxLengthValidator, notEmptyValidator)
+            ), true
+        )
+        addElement(EditTextElement("Password", "password", object : ValueCallback<String> {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
             }
-        }, arrayListOf(maxLengthValidator, notEmptyValidator)), true)
+        }, true, arrayListOf(notEmptyValidator)), true)
+
         addElement(LabelInputElement("Email", "test@test.cz", "", object : ValueCallback<String> {
             override fun callback(value: String) {
                 Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
@@ -234,7 +252,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun randomString(length: Int) = (1..length)
-            .map { Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("")
+        .map { Random.nextInt(0, charPool.size) }
+        .map(charPool::get)
+        .joinToString("")
 }
