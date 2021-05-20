@@ -23,7 +23,7 @@ import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 class LabelSwitchElement(
     private val label: String,
     private var initialValue: Boolean,
-    private val checkboxCallback: CheckboxCallback,
+    private val checkboxCallback: CheckboxCallback?,
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val headerComponent: Int = R.layout.form_inline_label,
     private val noteSymbolComponent: Int = R.layout.form_note_symbol,
@@ -103,7 +103,7 @@ class LabelSwitchElement(
         tmpSwitchView.setColor(formStyleBundle.primaryTextColor, context)
         tmpSwitchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         tmpSwitchView.setOnCheckedChangeListener { _, isChecked ->
-            checkboxCallback.callback(isChecked)
+            checkboxCallback?.callback(isChecked)
         }
         switchView = tmpSwitchView
         return tmpSwitchView
