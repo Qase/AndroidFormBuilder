@@ -11,7 +11,11 @@ import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
 import kotlinx.android.synthetic.main.form_header_item.view.*
 
 
-class HeaderElement(val value: String, val component: Int = R.layout.form_header_item) : FormElementNoValue() {
+class HeaderElement(
+    val value: String,
+    val component: Int = R.layout.form_header_item,
+    private val formStyleBundle: FormStyleBundle? = null
+) : FormElementNoValue() {
 
     private var view: View? = null
 
@@ -24,11 +28,15 @@ class HeaderElement(val value: String, val component: Int = R.layout.form_header
     }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
+        val usedFormStyleBundle = this.formStyleBundle ?: formStyleBundle
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val viewTmp = inflater.inflate(component, null)
         viewTmp.headerValue.text = value
-        viewTmp.headerValue.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        viewTmp.headerValue.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
+        viewTmp.headerValue.setTextColorResourceId(context, usedFormStyleBundle.primaryTextColor)
+        viewTmp.headerValue.setBackgroundColorResourceId(
+            context,
+            usedFormStyleBundle.primaryBackgroundColor
+        )
         view = viewTmp
         return viewTmp
     }
