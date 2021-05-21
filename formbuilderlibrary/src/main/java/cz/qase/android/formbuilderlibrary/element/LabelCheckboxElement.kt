@@ -19,7 +19,7 @@ import cz.qase.android.formbuilderlibrary.element.generic.FormElementValid
 class LabelCheckboxElement(
     private val label: String,
     private val checked: Boolean,
-    private val checkboxCallback: CheckboxCallback?,
+    private val checkboxCallback: CheckboxCallback? = null,
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val labelComponent: Int = R.layout.form_inline_label,
     private val checkboxComponent: Int = R.layout.form_checkbox_item,
