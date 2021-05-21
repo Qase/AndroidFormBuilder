@@ -2,14 +2,38 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+
+
+def gitVersionCode = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', 'HEAD', '--count'
+        standardOutput = stdout
+    }
+    def count = stdout.toString().trim().toInteger()
+    println count
+    return stdout.toString().trim().toInteger()
+}
+
+def VERSION_MAJOR = 2
+def VERSION_MINOR = 0
+def VERSION_PATCH = 0
+
+String VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+
+String AAR_NAME = "form-builder-library"
+
+String VERSION_FULL_NAME_FILE = "${AAR_NAME}-${VERSION_NAME}(${gitVersionCode()})"
+
 android {
     compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "9.1"
+        versionCode gitVersionCode()
+        versionName VERSION_NAME
+        setProperty("archivesBaseName", VERSION_FULL_NAME_FILE)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
