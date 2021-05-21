@@ -9,32 +9,36 @@ import java.util.UUID
 
 open class FormBuilder {
 
-    private val elementsMap: LinkedHashMap<String, List<FormElement<*>>> = LinkedHashMap()
+    private val elementsMap: LinkedHashMap<String, FormElementWrapper> = LinkedHashMap()
 
-    fun addElement(formElement: FormElement<*>, addDivider: Boolean = false, id: String = UUID.randomUUID().toString()): FormBuilder {
+    fun addElement(
+        formElement: FormElement<*>,
+        addDivider: Boolean = false,
+        id: String = UUID.randomUUID().toString(),
+        groupId: String? = null
+    ): FormBuilder {
         val elements: MutableList<FormElement<*>> = ArrayList()
         elements.add(formElement)
 
         if (addDivider) {
             elements.add(Divider())
         }
-        elementsMap[id] = elements
+        elementsMap[id] = FormElementWrapper(elements, groupId)
         return this
     }
 
-    fun addDivider(id: String = UUID.randomUUID().toString()): FormBuilder {
-        elementsMap[id] = arrayListOf(Divider())
+    fun addSpace(
+        id: String = UUID.randomUUID().toString(), groupId: String? = null
+    ): FormBuilder {
+        elementsMap[id] = FormElementWrapper(arrayListOf(SpaceElement()), groupId)
         return this
     }
 
-    fun addSpace(id: String = UUID.randomUUID().toString()): FormBuilder {
-        elementsMap[id] = arrayListOf(SpaceElement())
-        return this
-    }
-
-    fun buildForm(context: Context,
-                  containerView: ViewGroup,
-                  formStyleBundle: FormStyleBundle = FormStyleBundle()): Form {
+    fun buildForm(
+        context: Context,
+        containerView: ViewGroup,
+        formStyleBundle: FormStyleBundle = FormStyleBundle()
+    ): Form {
         return Form(context, containerView, elementsMap, formStyleBundle)
     }
 }

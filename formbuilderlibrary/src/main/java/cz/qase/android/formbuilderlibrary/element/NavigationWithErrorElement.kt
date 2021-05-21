@@ -57,6 +57,16 @@ open class NavigationWithErrorElement(
         viewEnd.addView(symbolView)
         view.addView(viewEnd)
 
+        enableClick(view, context, formStyleBundle)
+        viewGroup = view
+        return view
+    }
+
+    private fun enableClick(
+        view: ViewGroup,
+        context: Context,
+        formStyleBundle: FormStyleBundle
+    ) {
         view.isClickable = true
         view.setOnClickListener {
             actionCallback.callback()
@@ -85,8 +95,26 @@ open class NavigationWithErrorElement(
             }
             true
         }
-        viewGroup = view
-        return view
+    }
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        viewGroup?.let {
+            enableClick(it, context, formStyleBundle)
+        }
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
+        viewGroup?.isClickable = false
+        viewGroup?.setOnClickListener(null)
+        viewGroup?.setOnTouchListener(null)
     }
 
     private fun prepareSymbol(

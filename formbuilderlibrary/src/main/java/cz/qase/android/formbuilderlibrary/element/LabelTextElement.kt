@@ -16,7 +16,7 @@ open class LabelTextElement(private val label: String,
                             private val groupComponent: Int = R.layout.form_group_item_inline,
                             private val headerComponent: Int = R.layout.form_inline_label,
                             private val textComponent: Int = R.layout.form_inline_text,
-                            private val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
+                            protected val formStyleBundle: FormStyleBundle? = null) : FormElementNoValue() {
 
     private var textView: TextView? = null
     private var labelView: TextView? = null
@@ -41,6 +41,12 @@ open class LabelTextElement(private val label: String,
         view.addView(textView)
         viewGroup = view
         return view
+    }
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
     }
 
     private fun prepareText(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {

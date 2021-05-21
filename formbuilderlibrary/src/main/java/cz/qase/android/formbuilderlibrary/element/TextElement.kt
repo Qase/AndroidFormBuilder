@@ -34,6 +34,12 @@ class TextElement(val value: String, val component: Int = R.layout.form_text_ite
         return viewTmp
     }
 
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
     fun updateText(text: String) {
         textView?.text = text
     }

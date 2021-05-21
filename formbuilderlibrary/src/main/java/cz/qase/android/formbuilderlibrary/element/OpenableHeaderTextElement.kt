@@ -92,6 +92,12 @@ class OpenableHeaderTextElement(private val label: String,
         return view
     }
 
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
     private fun prepareHeaderGroup(inflater: LayoutInflater, root: ViewGroup): ViewGroup {
         val headerGroup = inflater.inflate(headerGroupComponent, root, false) as ViewGroup
         headerGroup.setBackgroundColorResourceId(context, fsb.secondaryBackgroundColor)

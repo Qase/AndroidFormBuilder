@@ -26,4 +26,10 @@ class SpaceElement(private val spaceComponent: Int = R.layout.form_space) : Form
         view = viewTmp
         return viewTmp
     }
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
 }

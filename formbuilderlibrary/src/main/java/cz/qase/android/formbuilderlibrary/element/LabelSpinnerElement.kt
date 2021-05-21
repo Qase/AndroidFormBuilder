@@ -68,7 +68,7 @@ class LabelSpinnerElement<T>(
         if (value != null) {
             spinner.selectedIndex = availableValues.indexOf(value)
         }
-        spinner.setBackgroundColor(context.resources.getColor(formStyleBundle.secondaryBackgroundColor))
+        spinner.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
@@ -122,21 +122,6 @@ class LabelSpinnerElement<T>(
         spinner?.attachDataSource(availableValues)
     }
 
-
-    public override fun enable() {
-        super.enable()
-        spinner?.isEnabled = true
-        spinner?.isClickable = true
-        spinner?.isFocusable = true
-    }
-
-    public override fun disable() {
-        super.disable()
-        spinner?.isEnabled = false
-        spinner?.isClickable = false
-        spinner?.isFocusable = false
-    }
-
     override fun getVal(): T? {
         return spinner?.selectedIndex?.let {
             if (it >= availableValues.size) {
@@ -144,5 +129,27 @@ class LabelSpinnerElement<T>(
             }
             availableValues.get(it)
         }
+    }
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        spinner?.isEnabled = true
+        spinner?.isClickable = true
+        spinner?.isFocusable = true
+        spinner?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        spinner?.isEnabled = false
+        spinner?.isClickable = false
+        spinner?.isFocusable = false
+        spinner?.setBackgroundColorResourceId(context, formStyleBundle.disabledBackgroundColor)
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
     }
 }

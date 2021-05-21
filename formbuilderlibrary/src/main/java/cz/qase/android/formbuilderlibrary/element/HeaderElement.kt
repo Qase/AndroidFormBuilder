@@ -40,4 +40,10 @@ class HeaderElement(
         view = viewTmp
         return viewTmp
     }
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+    }
 }

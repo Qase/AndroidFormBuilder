@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var form: Form
 
     private val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
+    private val INPUTS_ID = "INPUTS_ID"
     private val stringValues = arrayOf(
         "one",
         "two",
@@ -144,8 +145,21 @@ class MainActivity : AppCompatActivity() {
         //input elements
         addElement(HeaderElement("Input elements"), true)
         addElement(
-            LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback),
+            LabelSwitchElement("Enable inputs", true,  object : CheckboxCallback {
+                override fun callback(checked: Boolean) {
+                    if(checked){
+                        form.enableGroup(INPUTS_ID)
+                    }else{
+                        form.disableGroup(INPUTS_ID)
+                    }
+                }
+            }),
             true
+        )
+        addElement(
+            LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback),
+            true,
+            groupId=INPUTS_ID
         )
         addElement(
             LabelSwitchElement(
@@ -154,7 +168,8 @@ class MainActivity : AppCompatActivity() {
                 showToastCheckboxCallback,
                 noteCallback = showToastActionCallback
             ),
-            true
+            true,
+            groupId=INPUTS_ID
         )
         addElement(
             LabelSpinnerElement(
@@ -168,14 +183,16 @@ class MainActivity : AppCompatActivity() {
                         "You have to select a value!"
                     )
                 )
-            ), true
+            ), true,
+            groupId=INPUTS_ID
         )
         addElement(
             LabelCheckboxElement(
                 "LabelCheckboxElement label",
                 true,
                 showToastCheckboxCallback
-            ), true
+            ), true,
+            groupId=INPUTS_ID
         )
         addElement(
             LabelDateTimeElement(
@@ -184,7 +201,9 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager,
                 showToastDateTimeValueCallback,
                 formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))
-            )
+            ),
+            false,
+            groupId=INPUTS_ID
         )
         addSpace()
 

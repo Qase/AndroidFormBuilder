@@ -51,6 +51,16 @@ open class NavigationElement(
         view.addView(headerView)
         groupEnd.addView(symbolView)
         view.addView(groupEnd)
+        enableClick(view, context, formStyleBundle)
+        viewGroup = view
+        return view
+    }
+
+    private fun enableClick(
+        view: ViewGroup,
+        context: Context,
+        formStyleBundle: FormStyleBundle
+    ) {
         view.isClickable = true
         view.setOnClickListener {
             actionCallback.callback()
@@ -71,23 +81,54 @@ open class NavigationElement(
                     )
                 }
                 MotionEvent.ACTION_DOWN -> {
-                    view.setBackgroundColorResourceId(context, formStyleBundle.primaryBackgroundColor)
+                    view.setBackgroundColorResourceId(
+                        context,
+                        formStyleBundle.primaryBackgroundColor
+                    )
                 }
             }
             true
         }
-        viewGroup = view
-        return view
     }
 
-    private fun prepareSymbol(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): ImageView {
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        viewGroup?.let {
+            enableClick(it, context, formStyleBundle)
+        }
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
+        viewGroup?.isClickable = false
+        viewGroup?.setOnClickListener(null)
+        viewGroup?.setOnTouchListener(null)
+    }
+
+    private fun prepareSymbol(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): ImageView {
         val symbolView = inflater.inflate(symbolComponent, root, false) as ImageView
         val color = ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
         symbolView.setColorFilter(color)
         return symbolView
     }
 
-    private fun prepareLabel(inflater: LayoutInflater, context: Context, formStyleBundle: FormStyleBundle, root: ViewGroup): TextView {
+    private fun prepareLabel(
+        inflater: LayoutInflater,
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        root: ViewGroup
+    ): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label

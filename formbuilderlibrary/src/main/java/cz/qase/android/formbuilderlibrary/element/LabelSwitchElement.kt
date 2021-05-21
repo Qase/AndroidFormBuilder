@@ -147,13 +147,19 @@ class LabelSwitchElement(
         )
     }
 
-    public override fun enable() {
-        super.enable()
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
         switchView?.isEnabled = true
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
     }
 
-    public override fun disable() {
-        super.disable()
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
         switchView?.isEnabled = false
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
     }
 }

@@ -94,13 +94,21 @@ class LabelCheckboxElement(
         return checkbox
     }
 
-    public override fun enable() {
-        super.disable()
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
         checkbox?.isEnabled = true
+        checkbox?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
     }
 
-    public override fun disable() {
-        super.disable()
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
         checkbox?.isEnabled = false
+        checkbox?.setBackgroundColorResourceId(context, formStyleBundle.disabledBackgroundColor)
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
     }
 }

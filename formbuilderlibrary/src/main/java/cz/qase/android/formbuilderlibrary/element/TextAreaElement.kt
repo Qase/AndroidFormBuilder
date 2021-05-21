@@ -160,13 +160,19 @@ class TextAreaElement(
         }
     }
 
-    public override fun enable() {
-        super.disable()
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
         textInputEditText?.isEnabled = true
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
     }
 
-    public override fun disable() {
-        super.disable()
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
         textInputEditText?.isEnabled = false
+        viewGroup?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
     }
 }

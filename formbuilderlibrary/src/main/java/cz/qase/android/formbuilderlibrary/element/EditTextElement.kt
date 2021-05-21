@@ -21,7 +21,8 @@ open class EditTextElement(
     protected val text: String? = null,
     private val valueChangeListener: ValueCallback<String>? = null,
     protected val password: Boolean = false,
-    formValidators: MutableList<FormValidator<String>> = ArrayList()
+    formValidators: MutableList<FormValidator<String>> = ArrayList(),
+    private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<String>(formValidators) {
 
 
@@ -87,16 +88,22 @@ open class EditTextElement(
         }
     }
 
-    public override fun enable() {
-        super.disable()
-        editText?.isEnabled = true
-    }
-
-    public override fun disable() {
-        super.disable()
-        editText?.isEnabled = false
-    }
-
     override fun getVal(): String? = editText?.text.toString()
+
+    override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        editText?.isEnabled = true
+        textInputLayout?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).secondaryBackgroundColor
+        )
+    }
+
+    override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        editText?.isEnabled = false
+        textInputLayout?.setBackgroundColorResourceId(
+            context, (this.formStyleBundle
+                ?: formStyleBundle).disabledBackgroundColor
+        )
+    }
 
 }
