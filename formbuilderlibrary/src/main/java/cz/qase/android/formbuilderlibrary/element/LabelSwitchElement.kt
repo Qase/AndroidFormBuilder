@@ -24,6 +24,8 @@ class LabelSwitchElement(
     private val label: String,
     private var initialValue: Boolean,
     private val checkboxCallback: CheckboxCallback? = null,
+    private val trueNote: String? = null,
+    private val falseNote: String? = null,
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val headerComponent: Int = R.layout.form_inline_label,
     private val noteSymbolComponent: Int = R.layout.form_note_symbol,
@@ -35,6 +37,7 @@ class LabelSwitchElement(
 
     private var switchView: SwitchCompat? = null
     private var viewGroup: ViewGroup? = null
+    private var headerView: TextView? = null
 
     override fun hide() {
         viewGroup?.visibility = View.GONE
@@ -104,6 +107,9 @@ class LabelSwitchElement(
         tmpSwitchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         tmpSwitchView.setOnCheckedChangeListener { _, isChecked ->
             checkboxCallback?.callback(isChecked)
+            headerView?.let {
+                setLabelText(it, isChecked)
+            }
         }
         switchView = tmpSwitchView
         return tmpSwitchView
@@ -117,10 +123,26 @@ class LabelSwitchElement(
     ): TextView {
         val headerView = inflater.inflate(headerComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
-        headerView.text = label
+        setLabelText(headerView, initialValue)
+        this.headerView = headerView
         return headerView
     }
 
+    private fun setLabelText(headerView: TextView, value:Boolean) {
+        if (value) {
+            if (trueNote != null) {
+                headerView.text = label + "\n" + trueNote
+            } else {
+                headerView.text = label
+            }
+        } else {
+            if (falseNote != null) {
+                headerView.text = label + "\n" + falseNote
+            } else {
+                headerView.text = label
+            }
+        }
+    }
 
     private fun SwitchCompat.setColor(colorRes: Int, context: Context) {
         // trackColor is the thumbColor with 30% transparency (77)
@@ -141,7 +163,7 @@ class LabelSwitchElement(
                 arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
                 intArrayOf(
                     trackColor,
-                    Color.parseColor("#4D000000") // full black with 30% transparency (4D)
+                    Color.parseColor("#4DFFFFFF") // full black with 30% transparency (4D)
                 )
             )
         )

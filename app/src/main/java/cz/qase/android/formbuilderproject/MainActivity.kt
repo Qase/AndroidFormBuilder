@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
                         form.disableGroup(INPUTS_ID)
                     }
                 }
-            }),
+            }, "ON", "OFF"),
             true
         )
         addElement(
