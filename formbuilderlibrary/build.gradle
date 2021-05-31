@@ -17,7 +17,7 @@ def gitVersionCode = { ->
 
 def VERSION_MAJOR = 2
 def VERSION_MINOR = 1
-def VERSION_PATCH = 0
+def VERSION_PATCH = 1
 
 String VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
 
