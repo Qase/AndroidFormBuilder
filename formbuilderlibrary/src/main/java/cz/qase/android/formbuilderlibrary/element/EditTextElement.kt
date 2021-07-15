@@ -4,10 +4,13 @@ import android.content.Context
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
+import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.ValidationException
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
@@ -19,15 +22,16 @@ import cz.qase.android.formbuilderlibrary.validator.FormValidator
 open class EditTextElement(
     protected val hint: String?,
     protected val text: String? = null,
+    private val groupComponent: Int = R.layout.form_group_item_padding,
     private val valueChangeListener: ValueCallback<String>? = null,
     protected val password: Boolean = false,
     formValidators: MutableList<FormValidator<String>> = ArrayList(),
     private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<String>(formValidators) {
 
-
-    var editText: TextInputEditText? = null
-    var textInputLayout: TextInputLayout? = null
+    private var editText: TextInputEditText? = null
+    private var textInputLayout: TextInputLayout? = null
+    private var viewGroup: ViewGroup? = null
 
     override fun hide() {
         textInputLayout?.visibility = View.GONE
@@ -38,13 +42,12 @@ open class EditTextElement(
     }
 
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(groupComponent, null) as ViewGroup
+        view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
-        textInputLayout?.setBackgroundColorResourceId(
-            context,
-            formStyleBundle.secondaryBackgroundColor
-        )
-        textInputLayout?.setPadding(10, 0, 10, 0)
+
         editText = TextInputEditText(context)
         editText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         if (password) {
@@ -66,8 +69,8 @@ open class EditTextElement(
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-
-        return textInputLayout!!
+        view.addView(textInputLayout)
+        return view
     }
 
     private fun positiveValidation() {
@@ -92,7 +95,7 @@ open class EditTextElement(
 
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
         editText?.isEnabled = true
-        textInputLayout?.setBackgroundColorResourceId(
+        viewGroup?.setBackgroundColorResourceId(
             context, (this.formStyleBundle
                 ?: formStyleBundle).secondaryBackgroundColor
         )
@@ -100,7 +103,7 @@ open class EditTextElement(
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
         editText?.isEnabled = false
-        textInputLayout?.setBackgroundColorResourceId(
+        viewGroup?.setBackgroundColorResourceId(
             context, (this.formStyleBundle
                 ?: formStyleBundle).disabledBackgroundColor
         )

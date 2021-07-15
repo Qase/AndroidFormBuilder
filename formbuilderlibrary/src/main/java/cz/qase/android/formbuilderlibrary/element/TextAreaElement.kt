@@ -26,8 +26,7 @@ class TextAreaElement(
     private val numberOfLines: Int = 3,
     private val maxLength: Int? = null,
     formValidators: MutableList<FormValidator<String>> = ArrayList(),
-    private val groupComponent: Int = R.layout.form_group_item,
-    private val headerComponent: Int = R.layout.form_header_item,
+    private val groupComponent: Int = R.layout.form_group_item_padding,
     private val textAreaComponent: Int = R.layout.form_textarea_item,
     private val footerComponent: Int = R.layout.form_footer_text_right,
     private var formStyleBundle: FormStyleBundle? = null

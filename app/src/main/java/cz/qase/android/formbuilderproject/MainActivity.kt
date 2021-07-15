@@ -145,11 +145,11 @@ class MainActivity : AppCompatActivity() {
         //input elements
         addElement(HeaderElement("Input elements"), true)
         addElement(
-            LabelSwitchElement("Enable inputs", true,  object : CheckboxCallback {
+            LabelSwitchElement("Enable inputs", true, object : CheckboxCallback {
                 override fun callback(checked: Boolean) {
-                    if(checked){
+                    if (checked) {
                         form.enableGroup(INPUTS_ID)
-                    }else{
+                    } else {
                         form.disableGroup(INPUTS_ID)
                     }
                 }
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         addElement(
             LabelSwitchElement("LabelSwitchElement label", true, showToastCheckboxCallback),
             true,
-            groupId=INPUTS_ID
+            groupId = INPUTS_ID
         )
         addElement(
             LabelSwitchElement(
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 noteCallback = showToastActionCallback
             ),
             true,
-            groupId=INPUTS_ID
+            groupId = INPUTS_ID
         )
         addElement(
             LabelSpinnerElement(
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 )
             ), true,
-            groupId=INPUTS_ID
+            groupId = INPUTS_ID
         )
         addElement(
             LabelCheckboxElement(
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                 true,
                 showToastCheckboxCallback
             ), true,
-            groupId=INPUTS_ID
+            groupId = INPUTS_ID
         )
         addElement(
             LabelDateTimeElement(
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                 formValidators = arrayListOf(NotInPastValidator("Date cannot be in past"))
             ),
             false,
-            groupId=INPUTS_ID
+            groupId = INPUTS_ID
         )
         addSpace()
 
@@ -214,20 +214,25 @@ class MainActivity : AppCompatActivity() {
             EditTextElement(
                 "Hint",
                 "Edit text element text",
-                object : ValueCallback<String> {
+                valueChangeListener = object : ValueCallback<String> {
                     override fun callback(value: String) {
                         Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
                     }
                 },
-                false,
-                arrayListOf(maxLengthValidator, notEmptyValidator)
+                password = false,
+                formValidators = arrayListOf(maxLengthValidator, notEmptyValidator)
             ), true
         )
-        addElement(EditTextElement("Password", "password", object : ValueCallback<String> {
-            override fun callback(value: String) {
-                Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
-            }
-        }, true, arrayListOf(notEmptyValidator)), true)
+        addElement(
+            EditTextElement(
+                "Password", "password",
+                valueChangeListener = object : ValueCallback<String> {
+                    override fun callback(value: String) {
+                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                    }
+                }, password = true, formValidators = arrayListOf(notEmptyValidator)
+            ), true
+        )
 
         addElement(LabelInputElement("Email", "test@test.cz", "", object : ValueCallback<String> {
             override fun callback(value: String) {
