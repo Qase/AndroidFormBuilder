@@ -128,7 +128,7 @@ class LabelSwitchElement(
         return headerView
     }
 
-    private fun setLabelText(headerView: TextView, value:Boolean) {
+    private fun setLabelText(headerView: TextView, value: Boolean) {
         if (value) {
             if (trueNote != null) {
                 headerView.text = label + "\n" + trueNote
@@ -170,18 +170,21 @@ class LabelSwitchElement(
     }
 
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
+        switchView?.setColor(correctStyleBundle.primaryTextColor, context)
         switchView?.isEnabled = true
+        headerView?.setTextColorResourceId(context, correctStyleBundle.primaryTextColor)
         viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).secondaryBackgroundColor
+            context,
+            correctStyleBundle.secondaryBackgroundColor
         )
     }
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
+        switchView?.setColor(correctStyleBundle.disabledPrimaryTextColor, context)
         switchView?.isEnabled = false
-        viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).disabledBackgroundColor
-        )
+        headerView?.setTextColorResourceId(context, correctStyleBundle.disabledPrimaryTextColor)
+        viewGroup?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)
     }
 }

@@ -6,7 +6,9 @@ class FormStyleBundle(
     val primaryBackgroundColor: Int = R.color.colorBackgroundPrimary,
     val secondaryBackgroundColor: Int = R.color.colorBackground,
     val dividerColor: Int = R.color.colorGray,
-    val disabledBackgroundColor: Int = R.color.colorGray,
+    val disabledBackgroundColor: Int = R.color.colorBackground,
+    val disabledPrimaryTextColor: Int = R.color.colorGray,
+    val disabledSecondaryTextColor: Int = R.color.colorGray,
     val neutralSymbolColor: Int = R.color.colorGray,
     val dangerousSymbolColor: Int = R.color.colorRed
 ) {
@@ -35,6 +37,8 @@ class FormStyleBundle(
             R.color.threeTextSecondary,
             R.color.threeBackgroundPrimary,
             R.color.threeBackgroundSecondary,
+            R.color.threeDivider,
+            R.color.threeDisabledBackgroundSecondary,
             R.color.threeDivider,
             R.color.threeDivider
         )

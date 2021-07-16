@@ -28,6 +28,7 @@
     <color name="threeTextSecondary">#363636</color>
     <color name="threeBackgroundPrimary">#45ADA8</color>
     <color name="threeBackgroundSecondary">#A8A7A7</color>
+    <color name="threeDisabledBackgroundSecondary">#989898</color>
     <color name="threeDivider">#474747</color>
 
 

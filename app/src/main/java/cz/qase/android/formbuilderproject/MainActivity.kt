@@ -205,6 +205,20 @@ class MainActivity : AppCompatActivity() {
             false,
             groupId = INPUTS_ID
         )
+        addElement(
+            EditTextElement(
+                "Hint",
+                "Edit text element text",
+                valueChangeListener = object : ValueCallback<String> {
+                    override fun callback(value: String) {
+                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                password = false,
+                formValidators = arrayListOf(maxLengthValidator, notEmptyValidator)
+            ), true,
+            groupId = INPUTS_ID
+        )
         addSpace()
 
 

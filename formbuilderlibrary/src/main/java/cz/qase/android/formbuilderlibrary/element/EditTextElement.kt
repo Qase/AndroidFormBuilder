@@ -44,6 +44,7 @@ open class EditTextElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(groupComponent, null) as ViewGroup
+        viewGroup = view
         view.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
         textInputLayout = TextInputLayout(context)
         textInputLayout?.isErrorEnabled = true
@@ -94,18 +95,20 @@ open class EditTextElement(
     override fun getVal(): String? = editText?.text.toString()
 
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
+        editText?.setTextColorResourceId(context, correctStyleBundle.secondaryTextColor)
         editText?.isEnabled = true
         viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).secondaryBackgroundColor
+            context, correctStyleBundle.secondaryBackgroundColor
         )
     }
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
+        editText?.setTextColorResourceId(context, correctStyleBundle.disabledSecondaryTextColor)
         editText?.isEnabled = false
         viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).disabledBackgroundColor
+            context, correctStyleBundle.disabledBackgroundColor
         )
     }
 

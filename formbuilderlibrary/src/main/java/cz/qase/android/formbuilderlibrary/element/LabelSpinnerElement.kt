@@ -29,6 +29,7 @@ class LabelSpinnerElement<T>(
 ) : FormElementValidatable<T>(formValidators) {
 
     var spinner: NiceSpinner? = null
+    var headerView: TextView? = null
     private var viewGroup: ViewGroup? = null
 
     override fun hide() {
@@ -96,6 +97,7 @@ class LabelSpinnerElement<T>(
         val headerView = inflater.inflate(labelComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
+        this.headerView = headerView
         return headerView
     }
 
@@ -132,24 +134,26 @@ class LabelSpinnerElement<T>(
     }
 
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
         spinner?.isEnabled = true
         spinner?.isClickable = true
         spinner?.isFocusable = true
-        spinner?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        spinner?.setTextColorResourceId(context, correctStyleBundle.secondaryTextColor)
+        headerView?.setTextColorResourceId(context, correctStyleBundle.primaryTextColor)
+        spinner?.setBackgroundColorResourceId(context, correctStyleBundle.secondaryBackgroundColor)
         viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).secondaryBackgroundColor
+            context, correctStyleBundle.secondaryBackgroundColor
         )
     }
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
         spinner?.isEnabled = false
         spinner?.isClickable = false
         spinner?.isFocusable = false
-        spinner?.setBackgroundColorResourceId(context, formStyleBundle.disabledBackgroundColor)
-        viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).disabledBackgroundColor
-        )
+        spinner?.setTextColorResourceId(context, correctStyleBundle.disabledSecondaryTextColor)
+        headerView?.setTextColorResourceId(context, correctStyleBundle.disabledPrimaryTextColor)
+        spinner?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)
+        viewGroup?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)
     }
 }

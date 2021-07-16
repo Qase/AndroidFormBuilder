@@ -29,6 +29,7 @@ class LabelCheckboxElement(
 
     private var checkbox: CheckBox? = null
     private var viewGroup: ViewGroup? = null
+    private var headerView: TextView? = null
 
     override fun hide() {
         viewGroup?.visibility = View.GONE
@@ -72,6 +73,7 @@ class LabelCheckboxElement(
         val headerView = inflater.inflate(labelComponent, root, false) as TextView
         headerView.setTextColorResourceId(context, formStyleBundle.primaryTextColor)
         headerView.text = label
+        this.headerView = headerView
         return headerView
     }
 
@@ -95,20 +97,21 @@ class LabelCheckboxElement(
     }
 
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
         checkbox?.isEnabled = true
-        checkbox?.setBackgroundColorResourceId(context, formStyleBundle.secondaryBackgroundColor)
+        checkbox?.setBackgroundColorResourceId(context, correctStyleBundle.secondaryBackgroundColor)
+        headerView?.setTextColorResourceId(context, correctStyleBundle.primaryTextColor)
         viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).secondaryBackgroundColor
+            context,
+            correctStyleBundle.secondaryBackgroundColor
         )
     }
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
+        val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
         checkbox?.isEnabled = false
-        checkbox?.setBackgroundColorResourceId(context, formStyleBundle.disabledBackgroundColor)
-        viewGroup?.setBackgroundColorResourceId(
-            context, (this.formStyleBundle
-                ?: formStyleBundle).disabledBackgroundColor
-        )
+        checkbox?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)
+        headerView?.setTextColorResourceId(context, correctStyleBundle.disabledPrimaryTextColor)
+        viewGroup?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)
     }
 }
