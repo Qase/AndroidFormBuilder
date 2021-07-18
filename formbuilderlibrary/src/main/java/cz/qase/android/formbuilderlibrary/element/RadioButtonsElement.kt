@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,17 +64,21 @@ class RadioButtonsElement<T>(
                 ), intArrayOf(
                     ContextCompat.getColor(context, formStyleBundle.primaryTextColor),
                     ContextCompat.getColor(context, formStyleBundle.colorAccent),
-                    ColorUtils.setAlphaComponent(
+                    ColorUtils.blendARGB(
                         ContextCompat.getColor(
                             context,
                             formStyleBundle.primaryTextColor
-                        ), 100
+                        ),
+                        Color.BLACK,
+                        0.4f
                     ),
-                    ColorUtils.setAlphaComponent(
+                    ColorUtils.blendARGB(
                         ContextCompat.getColor(
                             context,
                             formStyleBundle.colorAccent
-                        ), 100
+                        ),
+                        Color.BLACK,
+                        0.4f
                     )
                 )
             )

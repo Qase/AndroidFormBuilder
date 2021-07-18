@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -121,6 +122,26 @@ class LabelSwitchElement(
         formStyleBundle: FormStyleBundle,
         translucent: Boolean
     ): ColorStateList {
+        val primaryColor = if (translucent) {
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(
+                    context,
+                    formStyleBundle.primaryTextColor
+                ), 100
+            )
+        } else {
+            ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
+        }
+        val accentColor = if (translucent) {
+            ColorUtils.setAlphaComponent(
+                ContextCompat.getColor(
+                    context,
+                    formStyleBundle.colorAccent
+                ), 100
+            )
+        } else {
+            ContextCompat.getColor(context, formStyleBundle.colorAccent)
+        }
         val colorStateList = ColorStateList(
             arrayOf(
                 intArrayOf(-android.R.attr.state_checked, android.R.attr.state_enabled),
@@ -128,28 +149,18 @@ class LabelSwitchElement(
                 intArrayOf(-android.R.attr.state_checked, -android.R.attr.state_enabled),
                 intArrayOf(android.R.attr.state_checked, -android.R.attr.state_enabled)
             ), intArrayOf(
-                ContextCompat.getColor(context, formStyleBundle.primaryTextColor),
-                ContextCompat.getColor(context, formStyleBundle.colorAccent),
-                if (translucent) {
-                    ColorUtils.setAlphaComponent(
-                        ContextCompat.getColor(
-                            context,
-                            formStyleBundle.primaryTextColor
-                        ), 100
-                    )
-                } else {
-                    ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
-                },
-                if (translucent) {
-                    ColorUtils.setAlphaComponent(
-                        ContextCompat.getColor(
-                            context,
-                            formStyleBundle.colorAccent
-                        ), 100
-                    )
-                } else {
-                    ContextCompat.getColor(context, formStyleBundle.colorAccent)
-                }
+                primaryColor,
+                accentColor,
+                ColorUtils.blendARGB(
+                    primaryColor,
+                    Color.BLACK,
+                    0.4f
+                ),
+                ColorUtils.blendARGB(
+                    accentColor,
+                    Color.BLACK,
+                    0.4f
+                )
             )
         )
         return colorStateList
