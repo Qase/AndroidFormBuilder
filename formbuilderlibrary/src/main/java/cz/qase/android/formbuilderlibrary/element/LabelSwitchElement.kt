@@ -2,7 +2,6 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.ColorUtils
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
@@ -103,7 +102,6 @@ class LabelSwitchElement(
     ): SwitchCompat {
         val tmpSwitchView = inflater.inflate(switchComponent, root, false) as SwitchCompat
         tmpSwitchView.isChecked = initialValue
-        tmpSwitchView.setColor(formStyleBundle.primaryTextColor, context)
         tmpSwitchView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         tmpSwitchView.setOnCheckedChangeListener { _, isChecked ->
             checkboxCallback?.callback(isChecked)
@@ -111,8 +109,50 @@ class LabelSwitchElement(
                 setLabelText(it, isChecked)
             }
         }
+
+        tmpSwitchView.thumbTintList = createColorStateList(context, formStyleBundle, false)
+        tmpSwitchView.trackTintList = createColorStateList(context, formStyleBundle, true)
         switchView = tmpSwitchView
         return tmpSwitchView
+    }
+
+    private fun createColorStateList(
+        context: Context,
+        formStyleBundle: FormStyleBundle,
+        translucent: Boolean
+    ): ColorStateList {
+        val colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_checked, android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_checked, android.R.attr.state_enabled),
+                intArrayOf(-android.R.attr.state_checked, -android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_checked, -android.R.attr.state_enabled)
+            ), intArrayOf(
+                ContextCompat.getColor(context, formStyleBundle.primaryTextColor),
+                ContextCompat.getColor(context, formStyleBundle.colorAccent),
+                if (translucent) {
+                    ColorUtils.setAlphaComponent(
+                        ContextCompat.getColor(
+                            context,
+                            formStyleBundle.primaryTextColor
+                        ), 100
+                    )
+                } else {
+                    ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
+                },
+                if (translucent) {
+                    ColorUtils.setAlphaComponent(
+                        ContextCompat.getColor(
+                            context,
+                            formStyleBundle.colorAccent
+                        ), 100
+                    )
+                } else {
+                    ContextCompat.getColor(context, formStyleBundle.colorAccent)
+                }
+            )
+        )
+        return colorStateList
     }
 
     private fun prepareHeader(
@@ -144,34 +184,8 @@ class LabelSwitchElement(
         }
     }
 
-    private fun SwitchCompat.setColor(colorRes: Int, context: Context) {
-        // trackColor is the thumbColor with 30% transparency (77)
-        val color = ContextCompat.getColor(context, colorRes)
-        val trackColor = Color.argb(77, Color.red(color), Color.green(color), Color.blue(color))
-
-        // setting the thumb color
-        DrawableCompat.setTintList(
-            thumbDrawable, ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(color, Color.WHITE)
-            )
-        )
-
-        // setting the track color
-        DrawableCompat.setTintList(
-            trackDrawable, ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(
-                    trackColor,
-                    Color.parseColor("#4DFFFFFF") // full black with 30% transparency (4D)
-                )
-            )
-        )
-    }
-
     override fun enableElement(context: Context, formStyleBundle: FormStyleBundle) {
         val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
-        switchView?.setColor(correctStyleBundle.primaryTextColor, context)
         switchView?.isEnabled = true
         headerView?.setTextColorResourceId(context, correctStyleBundle.primaryTextColor)
         viewGroup?.setBackgroundColorResourceId(
@@ -182,7 +196,6 @@ class LabelSwitchElement(
 
     override fun disableElement(context: Context, formStyleBundle: FormStyleBundle) {
         val correctStyleBundle = this.formStyleBundle ?: formStyleBundle
-        switchView?.setColor(correctStyleBundle.disabledPrimaryTextColor, context)
         switchView?.isEnabled = false
         headerView?.setTextColorResourceId(context, correctStyleBundle.disabledPrimaryTextColor)
         viewGroup?.setBackgroundColorResourceId(context, correctStyleBundle.disabledBackgroundColor)

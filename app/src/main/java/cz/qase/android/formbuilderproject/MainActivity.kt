@@ -6,21 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
-import cz.qase.android.formbuilderlibrary.element.ActionElement
-import cz.qase.android.formbuilderlibrary.element.ActionTextElement
-import cz.qase.android.formbuilderlibrary.element.EditTextElement
-import cz.qase.android.formbuilderlibrary.element.HeaderElement
-import cz.qase.android.formbuilderlibrary.element.LabelCheckboxElement
-import cz.qase.android.formbuilderlibrary.element.LabelDateTimeElement
-import cz.qase.android.formbuilderlibrary.element.LabelInputElement
-import cz.qase.android.formbuilderlibrary.element.LabelSpinnerElement
-import cz.qase.android.formbuilderlibrary.element.LabelSwitchElement
-import cz.qase.android.formbuilderlibrary.element.LabelTextElement
-import cz.qase.android.formbuilderlibrary.element.NavigationElement
-import cz.qase.android.formbuilderlibrary.element.NavigationWithErrorElement
-import cz.qase.android.formbuilderlibrary.element.OpenableHeaderTextElement
-import cz.qase.android.formbuilderlibrary.element.TextAreaElement
-import cz.qase.android.formbuilderlibrary.element.TextElement
+import cz.qase.android.formbuilderlibrary.element.*
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
@@ -49,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         "four",
         "really long long long long long five"
     ).map { "Option $it" }.toList()
+    private val fewStringValues = arrayOf(
+        "one",
+        "two"
+    ).map { "Option $it" }.toList()
+
     private val longerStringValues = (1..5).map { randomString(25) }
 
     private val notEmptyValidator = NotBlankFormValidator("This field is empty")
@@ -219,6 +210,20 @@ class MainActivity : AppCompatActivity() {
             ), true,
             groupId = INPUTS_ID
         )
+
+        addElement(
+            RadioButtonsElement(
+                "Option one",
+                fewStringValues,
+                valueCallback = object : ValueCallback<String> {
+                    override fun callback(value: String) {
+                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            ), true,
+            groupId = INPUTS_ID
+        )
+
         addSpace()
 
 

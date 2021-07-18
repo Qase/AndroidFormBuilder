@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.widget.CompoundButtonCompat
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
@@ -92,6 +93,31 @@ class LabelCheckboxElement(
         checkbox.setOnClickListener {
             checkboxCallback?.callback(checkbox.isChecked)
         }
+        val colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(-android.R.attr.state_checked, android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_checked, android.R.attr.state_enabled),
+                intArrayOf(-android.R.attr.state_checked, -android.R.attr.state_enabled),
+                intArrayOf(android.R.attr.state_checked, -android.R.attr.state_enabled)
+            ), intArrayOf(
+                ContextCompat.getColor(context, formStyleBundle.primaryTextColor),
+                ContextCompat.getColor(context, formStyleBundle.colorAccent),
+                ColorUtils.setAlphaComponent(
+                    ContextCompat.getColor(
+                        context,
+                        formStyleBundle.primaryTextColor
+                    ), 100
+                ),
+                ColorUtils.setAlphaComponent(
+                    ContextCompat.getColor(
+                        context,
+                        formStyleBundle.colorAccent
+                    ), 100
+                )
+            )
+        )
+        checkbox.buttonTintList = colorStateList //set the color tint list
+
         this.checkbox = checkbox
         return checkbox
     }
