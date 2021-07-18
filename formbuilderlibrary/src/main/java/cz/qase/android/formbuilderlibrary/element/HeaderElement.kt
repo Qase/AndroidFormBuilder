@@ -3,12 +3,12 @@ package cz.qase.android.formbuilderlibrary.element
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
 import cz.qase.android.formbuilderlibrary.R
 import cz.qase.android.formbuilderlibrary.common.setBackgroundColorResourceId
 import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementNoValue
-import kotlinx.android.synthetic.main.form_header_item.view.*
 
 
 class HeaderElement(
@@ -30,10 +30,11 @@ class HeaderElement(
     override fun createView(context: Context, formStyleBundle: FormStyleBundle): View {
         val usedFormStyleBundle = this.formStyleBundle ?: formStyleBundle
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val viewTmp = inflater.inflate(component, null)
-        viewTmp.headerValue.text = value
-        viewTmp.headerValue.setTextColorResourceId(context, usedFormStyleBundle.primaryTextColor)
-        viewTmp.headerValue.setBackgroundColorResourceId(
+        val viewTmp = inflater.inflate(component, null) as TextView
+        viewTmp.text = value
+        viewTmp.textSize
+        viewTmp.setTextColorResourceId(context, usedFormStyleBundle.primaryTextColor)
+        viewTmp.setBackgroundColorResourceId(
             context,
             usedFormStyleBundle.primaryBackgroundColor
         )
