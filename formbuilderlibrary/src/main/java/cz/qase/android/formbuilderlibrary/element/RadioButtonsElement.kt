@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.widget.AppCompatRadioButton
@@ -88,6 +89,7 @@ class RadioButtonsElement<T>(
 
             radioGroup.addView(radioButton)
         }
+        radioGroup.orientation = LinearLayout.HORIZONTAL
         radioGroup.setOnCheckedChangeListener { group: RadioGroup, checkedId: Int ->
             valueCallback?.callback(availableValues.get(checkedId))
         }
