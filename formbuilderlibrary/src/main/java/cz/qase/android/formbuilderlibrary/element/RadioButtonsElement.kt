@@ -45,9 +45,9 @@ class RadioButtonsElement<T>(
         val radioGroup = RadioGroup(context)
         for ((i, availableValue) in availableValues.withIndex()) {
             val radioButton = AppCompatRadioButton(context)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            val params = RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT
             )
             params.setMargins(
                 if (i == 0) {
