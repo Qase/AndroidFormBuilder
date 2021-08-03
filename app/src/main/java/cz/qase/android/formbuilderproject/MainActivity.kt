@@ -6,7 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import cz.qase.android.formbuilderlibrary.Form
 import cz.qase.android.formbuilderlibrary.FormBuilder
 import cz.qase.android.formbuilderlibrary.FormStyleBundle
-import cz.qase.android.formbuilderlibrary.element.*
+import cz.qase.android.formbuilderlibrary.element.ActionElement
+import cz.qase.android.formbuilderlibrary.element.ActionTextElement
+import cz.qase.android.formbuilderlibrary.element.EditTextElement
+import cz.qase.android.formbuilderlibrary.element.HeaderElement
+import cz.qase.android.formbuilderlibrary.element.LabelCheckboxElement
+import cz.qase.android.formbuilderlibrary.element.LabelDateTimeElement
+import cz.qase.android.formbuilderlibrary.element.LabelInputElement
+import cz.qase.android.formbuilderlibrary.element.LabelSpinnerElement
+import cz.qase.android.formbuilderlibrary.element.LabelSwitchElement
+import cz.qase.android.formbuilderlibrary.element.LabelTextElement
+import cz.qase.android.formbuilderlibrary.element.NavigationElement
+import cz.qase.android.formbuilderlibrary.element.NavigationWithErrorElement
+import cz.qase.android.formbuilderlibrary.element.OpenableHeaderTextElement
+import cz.qase.android.formbuilderlibrary.element.RadioButtonsElement
+import cz.qase.android.formbuilderlibrary.element.TextAreaElement
+import cz.qase.android.formbuilderlibrary.element.TextElement
 import cz.qase.android.formbuilderlibrary.element.generic.ActionCallback
 import cz.qase.android.formbuilderlibrary.element.generic.CheckboxCallback
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
@@ -17,8 +32,8 @@ import cz.qase.android.formbuilderlibrary.validator.NotBlankFormValidator
 import cz.qase.android.formbuilderlibrary.validator.NotEqualToValidator
 import cz.qase.android.formbuilderlibrary.validator.NotInPastValidator
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joda.time.DateTime
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import kotlin.random.Random
 
@@ -84,13 +99,13 @@ class MainActivity : AppCompatActivity() {
             toast?.show()
         }
     }
-    private val showToastDateTimeValueCallback = object : ValueCallback<DateTime> {
+    private val showToastDateTimeValueCallback = object : ValueCallback<Date> {
         private var toast: Toast? = null
-        override fun callback(value: DateTime) {
+        override fun callback(value: Date) {
             toast?.cancel()
             toast = Toast.makeText(
                 this@MainActivity,
-                SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value.toDate()),
+                SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value),
                 Toast.LENGTH_SHORT
             )
             toast?.show()

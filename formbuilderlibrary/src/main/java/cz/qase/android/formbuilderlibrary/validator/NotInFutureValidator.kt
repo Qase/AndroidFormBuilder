@@ -1,7 +1,7 @@
 package cz.qase.android.formbuilderlibrary.validator
 
 import cz.qase.android.formbuilderlibrary.ValidationException
-import org.joda.time.DateTime
+import java.util.Date
 
 /**
  * MaxLengthFormValidator
@@ -9,10 +9,10 @@ import org.joda.time.DateTime
  * Check if length of form value is bigger than specified value
  */
 class NotInFutureValidator(
-        private val errorMsg: String
-) : FormValidator<DateTime> {
-    override fun validate(value: DateTime?) {
-        if (value != null && value.isAfterNow) {
+    private val errorMsg: String
+) : FormValidator<Date> {
+    override fun validate(value: Date?) {
+        if (value != null && value.after(Date())) {
             throw ValidationException(errorMsg)
         }
     }

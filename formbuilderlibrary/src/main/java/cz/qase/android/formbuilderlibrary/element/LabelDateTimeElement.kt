@@ -15,7 +15,6 @@ import cz.qase.android.formbuilderlibrary.common.setTextColorResourceId
 import cz.qase.android.formbuilderlibrary.element.generic.FormElementValidatable
 import cz.qase.android.formbuilderlibrary.element.generic.ValueCallback
 import cz.qase.android.formbuilderlibrary.validator.FormValidator
-import org.joda.time.DateTime
 import wtf.qase.datetimepicker.DateTimePickerDialog
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -25,17 +24,17 @@ class LabelDateTimeElement(
     private val label: String,
     private var hint: String,
     private var supportFragmentManager: FragmentManager,
-    private val valueChangeListener: ValueCallback<DateTime>? = null,
-    private var value: DateTime? = null,
+    private val valueChangeListener: ValueCallback<Date>? = null,
+    private var value: Date? = null,
     private var sdf: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()),
-    formValidators: MutableList<FormValidator<DateTime>> = ArrayList(),
+    formValidators: MutableList<FormValidator<Date>> = ArrayList(),
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val headerComponent: Int = R.layout.form_inline_label,
     private val textComponent: Int = R.layout.form_inline_text,
     private val formStyleBundle: FormStyleBundle? = null
-) : FormElementValidatable<DateTime>(formValidators) {
+) : FormElementValidatable<Date>(formValidators) {
 
-    override fun getVal(): DateTime? {
+    override fun getVal(): Date? {
         return value
     }
 
@@ -102,7 +101,7 @@ class LabelDateTimeElement(
         textView.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         val tmpValue = value
         textView.text = if (tmpValue != null) {
-            sdf.format(tmpValue.toDate())
+            sdf.format(tmpValue)
         } else {
             hint
         }
@@ -132,11 +131,10 @@ class LabelDateTimeElement(
             true
         }
         val callback: (date: Date) -> Unit = { newDate ->
-            val dateTime = DateTime(newDate)
-            value = dateTime
+            value = newDate
             textView.text = sdf.format(newDate)
             positiveValidation()
-            valueChangeListener?.callback(dateTime)
+            valueChangeListener?.callback(newDate)
         }
         textView.setOnClickListener {
             DateTimePickerDialog.show(
