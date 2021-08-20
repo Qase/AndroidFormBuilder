@@ -126,11 +126,11 @@ class LabelSwitchElement(
             ColorUtils.setAlphaComponent(
                 ContextCompat.getColor(
                     context,
-                    formStyleBundle.primaryTextColor
+                    formStyleBundle.colorDisabledAccent
                 ), 100
             )
         } else {
-            ContextCompat.getColor(context, formStyleBundle.primaryTextColor)
+            ContextCompat.getColor(context, formStyleBundle.colorDisabledAccent)
         }
         val accentColor = if (translucent) {
             ColorUtils.setAlphaComponent(

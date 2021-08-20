@@ -75,12 +75,12 @@ class RadioButtonsElement<T>(
                     intArrayOf(-android.R.attr.state_checked, -android.R.attr.state_enabled),
                     intArrayOf(android.R.attr.state_checked, -android.R.attr.state_enabled)
                 ), intArrayOf(
-                    ContextCompat.getColor(context, formStyleBundle.primaryTextColor),
+                    ContextCompat.getColor(context, formStyleBundle.colorDisabledAccent),
                     ContextCompat.getColor(context, formStyleBundle.colorAccent),
                     ColorUtils.blendARGB(
                         ContextCompat.getColor(
                             context,
-                            formStyleBundle.primaryTextColor
+                            formStyleBundle.colorDisabledAccent
                         ),
                         Color.BLACK,
                         0.4f
