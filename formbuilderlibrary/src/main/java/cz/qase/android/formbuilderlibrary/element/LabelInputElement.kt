@@ -2,6 +2,7 @@ package cz.qase.android.formbuilderlibrary.element
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,8 @@ class LabelInputElement(
         textInputLayout.addView(textInputEditText)
         textInputEditText?.setTextColorResourceId(context, formStyleBundle.secondaryTextColor)
         textInputEditText?.setText(value)
+        textInputEditText?.maxLines = 1
+        textInputEditText?.inputType = InputType.TYPE_CLASS_TEXT
         textInputEditText?.addTextChangedListener(
             object : TextWatcher {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {

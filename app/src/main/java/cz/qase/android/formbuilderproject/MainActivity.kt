@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var form: Form
 
+    private lateinit var toast: Toast
+
+
     private val charPool: List<Char> = ('a'..'z') + ('A'..'Z')
     private val INPUTS_ID = "INPUTS_ID"
     private val stringValues = arrayOf(
@@ -64,11 +67,11 @@ class MainActivity : AppCompatActivity() {
 
     private val validateActionCallback = object : ActionCallback, Form.Callback {
         override fun successCallback() {
-            Toast.makeText(this@MainActivity, "Validate OK", Toast.LENGTH_SHORT).show()
+            showMessage("Validate OK")
         }
 
         override fun errorCallback(message: String?) {
-            Toast.makeText(this@MainActivity, "Validate not ok $message", Toast.LENGTH_SHORT).show()
+            showMessage("Validate not ok $message")
         }
 
         override fun callback() {
@@ -76,39 +79,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showMessage(message: String) {
+        toast.setText(message)
+        toast.show()
+    }
+
     private val showToastActionCallback = object : ActionCallback {
         override fun callback() {
-            Toast.makeText(this@MainActivity, "Action performed", Toast.LENGTH_SHORT).show()
+            showMessage("Action performed")
         }
     }
 
     private val showToastCheckboxCallback = object : CheckboxCallback {
-        private var toast: Toast? = null
         override fun callback(checked: Boolean) {
-            toast?.cancel()
-            toast = Toast.makeText(this@MainActivity, "Selected: $checked", Toast.LENGTH_SHORT)
-            toast?.show()
+            showMessage("Selected: $checked")
         }
     }
 
     private val showToastStringValueCallback = object : ValueCallback<String> {
-        private var toast: Toast? = null
         override fun callback(value: String) {
-            toast?.cancel()
-            toast = Toast.makeText(this@MainActivity, value, Toast.LENGTH_SHORT)
-            toast?.show()
+            showMessage(value)
         }
     }
     private val showToastDateTimeValueCallback = object : ValueCallback<Date> {
-        private var toast: Toast? = null
         override fun callback(value: Date) {
-            toast?.cancel()
-            toast = Toast.makeText(
-                this@MainActivity,
-                SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value),
-                Toast.LENGTH_SHORT
-            )
-            toast?.show()
+            showMessage(SimpleDateFormat("dd.MM.yyyy - HH:mm", Locale.getDefault()).format(value))
+
         }
     }
 
@@ -116,6 +112,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        toast = Toast.makeText(this, "Toast", Toast.LENGTH_SHORT)
         form = buildForm()
         form.draw()
         //how to get inout data??
@@ -217,7 +214,7 @@ class MainActivity : AppCompatActivity() {
                 "Edit text element text",
                 valueChangeListener = object : ValueCallback<String> {
                     override fun callback(value: String) {
-                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                        showMessage(value)
                     }
                 },
                 password = false,
@@ -232,7 +229,7 @@ class MainActivity : AppCompatActivity() {
                 fewStringValues,
                 valueCallback = object : ValueCallback<String> {
                     override fun callback(value: String) {
-                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                        showMessage(value)
                     }
                 }
             ), true,
@@ -250,7 +247,7 @@ class MainActivity : AppCompatActivity() {
                 "Edit text element text",
                 valueChangeListener = object : ValueCallback<String> {
                     override fun callback(value: String) {
-                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                        showMessage(value)
                     }
                 },
                 password = false,
@@ -262,7 +259,7 @@ class MainActivity : AppCompatActivity() {
                 "Password", "password",
                 valueChangeListener = object : ValueCallback<String> {
                     override fun callback(value: String) {
-                        Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                        showMessage(value)
                     }
                 }, password = true, formValidators = arrayListOf(notEmptyValidator)
             ), true
@@ -270,7 +267,7 @@ class MainActivity : AppCompatActivity() {
 
         addElement(LabelInputElement("Email", "test@test.cz", "", object : ValueCallback<String> {
             override fun callback(value: String) {
-                Toast.makeText(applicationContext, value, Toast.LENGTH_SHORT).show()
+                showMessage(value)
             }
         }, arrayListOf(emailValidator)), true)
         addElement(
