@@ -26,6 +26,7 @@ open class EditTextElement(
     private val valueChangeListener: ValueCallback<String>? = null,
     protected val password: Boolean = false,
     formValidators: MutableList<FormValidator<String>> = ArrayList(),
+    private val validateImmediately: Boolean = false,
     private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<String>(formValidators) {
 
@@ -60,7 +61,11 @@ open class EditTextElement(
         editText?.setText(text)
         editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                positiveValidation()
+                if (validateImmediately) {
+                    validate()
+                } else {
+                    positiveValidation()
+                }
                 valueChangeListener?.callback(s.toString())
             }
 

@@ -29,6 +29,7 @@ class LabelInputElement(
     private val groupComponent: Int = R.layout.form_group_item_inline,
     private val headerComponent: Int = R.layout.form_inline_label,
     private val inputComponent: Int = R.layout.form_text_input_layout,
+    private val validateImmediately: Boolean = false,
     private val formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<String>(formValidators) {
     override fun getVal(): String {
@@ -83,7 +84,11 @@ class LabelInputElement(
         textInputEditText?.addTextChangedListener(
             object : TextWatcher {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    positiveValidation()
+                    if (validateImmediately) {
+                        validate()
+                    } else {
+                        positiveValidation()
+                    }
                     valueChangeListener?.callback(s.toString())
                 }
 

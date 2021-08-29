@@ -29,6 +29,7 @@ class TextAreaElement(
     private val groupComponent: Int = R.layout.form_group_item_padding,
     private val textAreaComponent: Int = R.layout.form_textarea_item,
     private val footerComponent: Int = R.layout.form_footer_text_right,
+    private val validateImmediately: Boolean = false,
     private var formStyleBundle: FormStyleBundle? = null
 ) : FormElementValidatable<String>(formValidators) {
 
@@ -93,7 +94,11 @@ class TextAreaElement(
                     } else {
                         footerView?.text = "$length"
                     }
-                    positiveValidation()
+                    if (validateImmediately) {
+                        validate()
+                    } else {
+                        positiveValidation()
+                    }
                     valueChangeListener?.callback(s.toString())
 
                 }
