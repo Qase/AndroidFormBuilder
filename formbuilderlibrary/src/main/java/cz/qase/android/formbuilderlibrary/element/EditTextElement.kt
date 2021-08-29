@@ -62,7 +62,7 @@ open class EditTextElement(
         editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 if (validateImmediately) {
-                    validate()
+                    validation()
                 } else {
                     positiveValidation()
                 }
@@ -77,6 +77,15 @@ open class EditTextElement(
         })
         view.addView(textInputLayout)
         return view
+    }
+
+    private fun validation() {
+        try {
+            super.validate()
+            textInputLayout?.error = null
+        } catch (e: ValidationException) {
+            textInputLayout?.error = e.message
+        }
     }
 
     private fun positiveValidation() {

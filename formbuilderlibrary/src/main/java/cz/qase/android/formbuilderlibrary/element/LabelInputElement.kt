@@ -85,7 +85,7 @@ class LabelInputElement(
             object : TextWatcher {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if (validateImmediately) {
-                        validate()
+                        validation()
                     } else {
                         positiveValidation()
                     }
@@ -114,6 +114,15 @@ class LabelInputElement(
 
     fun updateText(text: String) {
         textInputEditText?.setText(text)
+    }
+
+    private fun validation() {
+        try {
+            super.validate()
+            textInputLayout?.error = null
+        } catch (e: ValidationException) {
+            textInputLayout?.error = e.message
+        }
     }
 
     private fun positiveValidation() {

@@ -95,7 +95,7 @@ class TextAreaElement(
                         footerView?.text = "$length"
                     }
                     if (validateImmediately) {
-                        validate()
+                        validation()
                     } else {
                         positiveValidation()
                     }
@@ -151,6 +151,15 @@ class TextAreaElement(
             super.validate()
             textInputLayout?.error = null
         } catch (e: ValidationException) {
+        }
+    }
+
+    private fun validation() {
+        try {
+            super.validate()
+            textInputLayout?.error = null
+        } catch (e: ValidationException) {
+            textInputLayout?.error = e.message
         }
     }
 
